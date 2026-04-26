@@ -12,7 +12,18 @@
     "Visualization",
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onCommand:watchtower.openGraph",
+    "onCommand:watchtower.openMissionControl",
+    "onCommand:watchtower.refreshAgents",
+    "onView:watchtower.agents",
+    "onView:watchtower.sessions",
+    "onView:watchtower.skills"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/duongau/watchtower"
+  },
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
@@ -59,8 +70,9 @@
     }
   },
   "scripts": {
-    "vscode:prepublish": "npm run compile",
+    "vscode:prepublish": "npm run build",
     "compile": "tsc -p ./",
+    "build": "node esbuild.js --production",
     "watch": "tsc -watch -p ./",
     "lint": "tsc --noEmit",
     "test": "vitest run",
@@ -71,7 +83,7 @@
     "@types/node": "^22.0.0",
     "@types/vscode": "^1.100.0",
     "@vscode/vsce": "^3.0.0",
-    "sharp": "^0.34.5",
+    "esbuild": "^0.25.0",
     "typescript": "^5.7.0",
     "vitest": "^3.0.0"
   },

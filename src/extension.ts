@@ -1,12 +1,34 @@
 import * as vscode from 'vscode';
 
-export function activate(context: vscode.ExtensionContext) {
-  console.log('Watchtower is now active');
+let outputChannel: vscode.OutputChannel;
 
-  // TODO: Phase 1 — Register commands
-  // TODO: Phase 1 — Set up webview panel provider
-  // TODO: Phase 3 — Register tree view providers
-  // TODO: Phase 3 — Set up status bar items
+export function activate(context: vscode.ExtensionContext) {
+  outputChannel = vscode.window.createOutputChannel('Watchtower');
+  context.subscriptions.push(outputChannel);
+  outputChannel.appendLine('Watchtower activating...');
+
+  // Register commands
+  context.subscriptions.push(
+    vscode.commands.registerCommand('watchtower.openGraph', () => {
+      vscode.window.showInformationMessage('Watchtower: Agent Graph coming soon');
+    })
+  );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand('watchtower.openMissionControl', () => {
+      vscode.window.showInformationMessage('Watchtower: Mission Control coming soon');
+    })
+  );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand('watchtower.refreshAgents', () => {
+      vscode.window.showInformationMessage('Watchtower: Refreshing agents...');
+    })
+  );
+
+  outputChannel.appendLine('Watchtower activated — 3 commands registered');
 }
 
-export function deactivate() {}
+export function deactivate() {
+  outputChannel?.appendLine('Watchtower deactivated');
+}
