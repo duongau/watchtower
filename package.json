@@ -1,0 +1,85 @@
+{
+  "name": "squad-watchtower",
+  "displayName": "Squad Watchtower",
+  "description": "Visual command center for monitoring AI agent squads inside VS Code",
+  "version": "0.1.0",
+  "publisher": "duongau",
+  "license": "MIT",
+  "engines": {
+    "vscode": "^1.100.0"
+  },
+  "categories": [
+    "Visualization",
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./dist/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "squadWatchtower.openGraph",
+        "title": "Open Agent Graph",
+        "category": "Squad Watchtower"
+      },
+      {
+        "command": "squadWatchtower.openMissionControl",
+        "title": "Open Mission Control",
+        "category": "Squad Watchtower"
+      },
+      {
+        "command": "squadWatchtower.refreshAgents",
+        "title": "Refresh Agents",
+        "category": "Squad Watchtower"
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "squad-watchtower",
+          "title": "Squad Watchtower",
+          "icon": "resources/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "squad-watchtower": [
+        {
+          "id": "squadWatchtower.agents",
+          "name": "Agents"
+        },
+        {
+          "id": "squadWatchtower.sessions",
+          "name": "Sessions"
+        },
+        {
+          "id": "squadWatchtower.skills",
+          "name": "Skills"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "npm run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "lint": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "package": "vsce package"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/vscode": "^1.100.0",
+    "typescript": "^5.7.0",
+    "vitest": "^3.0.0",
+    "@vscode/vsce": "^3.0.0"
+  },
+  "dependencies": {
+    "@xyflow/react": "^12.6.0",
+    "dagre": "^0.8.5",
+    "lucide-react": "^1.8.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "zustand": "^5.0.0"
+  }
+}

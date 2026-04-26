@@ -1,0 +1,13 @@
+{
+  "version": 1,
+  "defaultModel": "gpt-5.4",
+  "agentModelOverrides": {
+    "minato": "gpt-5.4",
+    "tobirama": "gpt-5.3-codex",
+    "hashirama": "gpt-5.3-codex",
+    "tsunade": "gpt-5.3-codex",
+    "kakashi": "gpt-5.3-codex",
+    "scribe": "claude-haiku-4.5",
+    "ralph": "claude-haiku-4.5"
+  }
+}
