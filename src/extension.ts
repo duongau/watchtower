@@ -1,18 +1,7 @@
 import * as vscode from 'vscode';
-import { MessageBridge } from './services/MessageBridge.js';
+import { GraphPanelProvider } from './providers/GraphPanelProvider.js';
 
 let outputChannel: vscode.OutputChannel;
-
-/**
- * Create a MessageBridge for a webview panel.
- * Called by WebviewPanelProvider (sub-plan 3) — not wired yet.
- */
-export function createMessageBridge(
-  webview: vscode.Webview,
-  output: vscode.OutputChannel,
-): MessageBridge {
-  return new MessageBridge(webview, output);
-}
 
 export function activate(context: vscode.ExtensionContext) {
   outputChannel = vscode.window.createOutputChannel('Watchtower');
@@ -22,7 +11,7 @@ export function activate(context: vscode.ExtensionContext) {
   // Register commands
   context.subscriptions.push(
     vscode.commands.registerCommand('watchtower.openGraph', () => {
-      vscode.window.showInformationMessage('Watchtower: Agent Graph coming soon');
+      GraphPanelProvider.createOrShow(context, outputChannel);
     })
   );
 
