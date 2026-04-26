@@ -76,7 +76,7 @@ body {
 /* Selection box */
 .react-flow__selection {
   border: 1px solid var(--vscode-focusBorder);
-  background: rgba(0, 127, 212, 0.08);
+  background: color-mix(in srgb, var(--vscode-focusBorder) 8%, transparent);
 }
 
 /* Attribution (hide in webview) */

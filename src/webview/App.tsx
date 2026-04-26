@@ -127,7 +127,7 @@ function GraphCanvas() {
 
   // Signal ready to extension host on mount
   useEffect(() => {
-    bridge.postMessage({ command: 'ready', requestId: 'init' } as never);
+    bridge.postMessage({ command: 'ready', requestId: 'init' });
   }, []);
 
   // Wire up push handler for future real data
@@ -163,7 +163,7 @@ function GraphCanvas() {
       <Background variant={BackgroundVariant.Dots} gap={20} size={1} />
       <MiniMap
         nodeColor={minimapNodeColor}
-        maskColor="rgba(0, 0, 0, 0.3)"
+        maskColor="color-mix(in srgb, var(--vscode-editor-background) 70%, transparent)"
         pannable
         zoomable
       />
