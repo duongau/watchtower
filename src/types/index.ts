@@ -3,29 +3,17 @@
 // Imported by both extension host (src/) and webview (src/webview/)
 // ---------------------------------------------------------------------------
 
-// ---------------------------------------------------------------------------
-// Message Protocol (extension ↔ webview)
-// ---------------------------------------------------------------------------
-
-/** Base message shape — every message has a command discriminator */
-export interface BaseMessage {
-  command: string;
-}
-
-/** Messages the extension host sends TO the webview */
-export type ExtensionToWebviewMessage =
-  | { command: 'updateAgents'; agents: Agent[] }
-  | { command: 'updateSquads'; squads: Squad[] }
-  | { command: 'navigate'; route: string }
-  | { command: 'showError'; message: string };
-
-/** Messages the webview sends TO the extension host */
-export type WebviewToExtensionMessage =
-  | { command: 'ready' }
-  | { command: 'requestAgents' }
-  | { command: 'requestSquads' }
-  | { command: 'openAgent'; agentId: string }
-  | { command: 'refreshAll' };
+// Re-export message protocol types
+export type {
+  RequestMessage,
+  ResponseMessage,
+  PushMessage,
+  WebviewToExtensionMessage,
+  ExtensionToWebviewMessage,
+  WebviewCommand,
+  ExtensionCommand,
+  RequestHandler,
+} from './messages.js';
 
 // ---------------------------------------------------------------------------
 // Agent
