@@ -93,3 +93,8 @@
 **By:** Minato (Lead / Architect)
 **What:** Reviewed webview infrastructure (GraphPanelProvider, getWebviewContent, Vite config, webview stub). CSP is strict (nonce-based, no unsafe-inline/eval), resource URIs correct via asWebviewUri(), singleton lifecycle clean, retainContextWhenHidden justified for graph state.
 **Why:** Solid, secure, well-tested. Bridge architecture is an improvement over raw postMessage switch patterns. Nit: push GraphPanelProvider into context.subscriptions for explicit cleanup on deactivation.
+
+### 2026-04-26T19:00:00Z: Code Review — Graph Port → APPROVE with nits
+**By:** Minato (Lead / Architect)
+**What:** Reviewed graph port (AgentNode, RootNode, GraphCanvas, App, dagre layout, 48 tests). Architecturally sound — clean component design, proper ReactFlow wrapping, correct bridge integration, near-perfect theme compliance. Two hardcoded colors (selection box rgba, MiniMap maskColor) and one withdrawn nit.
+**Why:** Graph port delivers the core visualization. 100% VS Code CSS variables in all CSS files. No Zustand yet (raw useNodesState/useEdgesState) so no React 19 risks. CSP-compatible — Vite bundles @xyflow styles at build time, no runtime external requests. dagre layout is a pure function via useMemo. Nits fixed by Tsunade before merge.
