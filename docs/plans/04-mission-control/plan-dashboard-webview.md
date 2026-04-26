@@ -23,7 +23,7 @@ Mission Control's widget dashboard is a complex React UI that can't be replicate
 
 ### Phase 1: Panel registration
 - Register `MCWebviewPanelProvider` in extension activation
-- Command: `squadWatchtower.openMC`
+- Command: `watchtower.openMC`
 - Panel title: "Mission Control"
 - Icon: dashboard/grid icon
 - Retains state on hide/show (retainContextWhenHidden)

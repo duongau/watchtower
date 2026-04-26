@@ -32,7 +32,7 @@ Live dashboard inside VS Code showing fleet status, token tracking, pipeline tim
 | Minato | Dashboard information architecture review |
 
 ## Acceptance Criteria
-1. "Squad Watchtower: Open Mission Control" command opens dashboard panel
+1. "Watchtower: Open Mission Control" command opens dashboard panel
 2. Widget grid shows at least 4 widgets with live data
 3. Widgets are reorderable via drag-and-drop
 4. Token tracking shows accurate cost estimates by model

@@ -21,9 +21,9 @@ Register the initial VS Code commands that appear in the command palette. In Pha
 
 ### Phase 1: Core commands
 Register in `activate()`:
-- `squadWatchtower.openGraph` — Open Agent Graph panel
-- `squadWatchtower.openMissionControl` — Open Mission Control panel
-- `squadWatchtower.refreshAgents` — Refresh agent data from .squad/ files
+- `watchtower.openGraph` — Open Agent Graph panel
+- `watchtower.openMissionControl` — Open Mission Control panel
+- `watchtower.refreshAgents` — Refresh agent data from .squad/ files
 
 Each command: `vscode.commands.registerCommand(id, handler)` → push to `context.subscriptions`
 

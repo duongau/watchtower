@@ -3,7 +3,7 @@
 ## Identity
 - **Name:** Hashirama
 - **Role:** Frontend Dev
-- **Project:** Squad Watchtower (VS Code Extension)
+- **Project:** Watchtower (VS Code Extension)
 
 ## Responsibilities
 - Webview React application (agent graph, Mission Control dashboard)

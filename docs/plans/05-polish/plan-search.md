@@ -39,7 +39,7 @@ Watchtower has a search bar and full-text search across agents and sessions. In 
 - Ranked by relevance
 
 ### Phase 4: Quick pick search
-- `squadWatchtower.quickSearch` command
+- `watchtower.quickSearch` command
 - Opens VS Code QuickPick with fuzzy search
 - Categories: Agents, Skills, Sessions, Decisions, Commands
 - Icons per category for visual distinction

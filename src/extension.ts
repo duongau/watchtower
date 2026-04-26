@@ -1,7 +1,7 @@
 import * as vscode from 'vscode';
 
 export function activate(context: vscode.ExtensionContext) {
-  console.log('Squad Watchtower is now active');
+  console.log('Watchtower is now active');
 
   // TODO: Phase 1 — Register commands
   // TODO: Phase 1 — Set up webview panel provider

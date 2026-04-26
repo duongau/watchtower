@@ -3,7 +3,7 @@
 ## Identity
 - **Name:** Minato
 - **Role:** Lead / Architect
-- **Project:** Squad Watchtower (VS Code Extension)
+- **Project:** Watchtower (VS Code Extension)
 
 ## Responsibilities
 - Extension architecture decisions and patterns

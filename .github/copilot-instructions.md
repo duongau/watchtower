@@ -1,7 +1,7 @@
-# Squad Watchtower — Copilot Instructions
+# Watchtower — Copilot Instructions
 
 ## Project Context
-Squad Watchtower is a VS Code extension for monitoring AI agent squads.
+Watchtower is a VS Code extension for monitoring AI agent squads.
 Migrated from a standalone desktop app (Electron/React/Express/SQLite).
 Stack: TypeScript, VS Code Extension API, React 19 (webviews), @xyflow/react, Zustand, Vitest.
 

@@ -1,6 +1,6 @@
 # Squad Decisions
 
-> Canonical decision ledger for Squad Watchtower (VS Code Extension)
+> Canonical decision ledger for Watchtower (VS Code Extension)
 
 ---
 
@@ -41,5 +41,5 @@
 
 ### 2026-04-26T01:02:00Z: Reference material — three inspiration projects
 **By:** Duong
-**What:** ATM (Agent Team Manager), Mission Control (builderz-labs), and Squad (bradygaster) are reference projects. ATM's visual org chart + Mission Control's dashboard depth + Squad's framework = Squad Watchtower's DNA.
+**What:** ATM (Agent Team Manager), Mission Control (builderz-labs), and Squad (bradygaster) are reference projects. ATM's visual org chart + Mission Control's dashboard depth + Squad's framework = Watchtower's DNA.
 **Why:** Establishes design language and feature expectations without copying any single project.

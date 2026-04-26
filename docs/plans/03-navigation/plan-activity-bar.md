@@ -14,7 +14,7 @@ The extension needs a home in VS Code's activity bar (the vertical icon strip on
 ## Phases
 
 - [ ] Phase 1: Activity bar icon — custom Watchtower/telescope icon
-- [ ] Phase 2: View container — register `squadWatchtower` viewsContainer
+- [ ] Phase 2: View container — register `watchtower` viewsContainer
 - [ ] Phase 3: View registration — agents, sessions, skills as views within the container
 - [ ] Phase 4: Welcome views — helpful empty states when no .squad/ is found
 - [ ] Phase 5: View title actions — refresh, add, filter buttons in view headers
@@ -31,8 +31,8 @@ The extension needs a home in VS Code's activity bar (the vertical icon strip on
 "contributes": {
   "viewsContainers": {
     "activitybar": [{
-      "id": "squadWatchtower",
-      "title": "Squad Watchtower",
+      "id": "watchtower",
+      "title": "Watchtower",
       "icon": "resources/watchtower.svg"
     }]
   }
@@ -42,10 +42,10 @@ The extension needs a home in VS Code's activity bar (the vertical icon strip on
 ### Phase 3: View registration
 ```json
 "views": {
-  "squadWatchtower": [
-    { "id": "squadWatchtower.agents", "name": "Agents" },
-    { "id": "squadWatchtower.sessions", "name": "Sessions" },
-    { "id": "squadWatchtower.skills", "name": "Skills" }
+  "watchtower": [
+    { "id": "watchtower.agents", "name": "Agents" },
+    { "id": "watchtower.sessions", "name": "Sessions" },
+    { "id": "watchtower.skills", "name": "Skills" }
   ]
 }
 ```

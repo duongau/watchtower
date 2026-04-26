@@ -39,7 +39,7 @@ Note: some features intentionally dropped (Remote Access, Auth)
 Add banner to top of watchtower README:
 ```markdown
 > ⚠️ **This project has moved!** Watchtower is now a VS Code extension.
-> Install from the marketplace: [Squad Watchtower](link)
+> Install from the marketplace: [Watchtower](link)
 > This repo is archived for reference.
 ```
 

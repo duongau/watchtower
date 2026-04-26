@@ -24,7 +24,7 @@ Set up the WebviewPanel provider that hosts our React application. This is the b
 
 ### Phase 1: WebviewPanel provider
 - `src/providers/GraphPanelProvider.ts`
-- `vscode.window.createWebviewPanel()` with viewType `squadWatchtower.graph`
+- `vscode.window.createWebviewPanel()` with viewType `watchtower.graph`
 - Enable scripts in webview options
 - Set `localResourceRoots` to the webview dist directory
 - Handle `onDidDispose` to clean up resources

@@ -1,6 +1,6 @@
 {
-  "name": "squad-watchtower",
-  "displayName": "Squad Watchtower",
+  "name": "watchtower",
+  "displayName": "Watchtower",
   "description": "Visual command center for monitoring AI agent squads inside VS Code",
   "version": "0.1.0",
   "publisher": "duongau",
@@ -17,42 +17,42 @@
   "contributes": {
     "commands": [
       {
-        "command": "squadWatchtower.openGraph",
+        "command": "watchtower.openGraph",
         "title": "Open Agent Graph",
-        "category": "Squad Watchtower"
+        "category": "Watchtower"
       },
       {
-        "command": "squadWatchtower.openMissionControl",
+        "command": "watchtower.openMissionControl",
         "title": "Open Mission Control",
-        "category": "Squad Watchtower"
+        "category": "Watchtower"
       },
       {
-        "command": "squadWatchtower.refreshAgents",
+        "command": "watchtower.refreshAgents",
         "title": "Refresh Agents",
-        "category": "Squad Watchtower"
+        "category": "Watchtower"
       }
     ],
     "viewsContainers": {
       "activitybar": [
         {
-          "id": "squad-watchtower",
-          "title": "Squad Watchtower",
+          "id": "watchtower",
+          "title": "Watchtower",
           "icon": "resources/icon.svg"
         }
       ]
     },
     "views": {
-      "squad-watchtower": [
+      "watchtower": [
         {
-          "id": "squadWatchtower.agents",
+          "id": "watchtower.agents",
           "name": "Agents"
         },
         {
-          "id": "squadWatchtower.sessions",
+          "id": "watchtower.sessions",
           "name": "Sessions"
         },
         {
-          "id": "squadWatchtower.skills",
+          "id": "watchtower.skills",
           "name": "Skills"
         }
       ]

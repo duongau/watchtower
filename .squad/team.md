@@ -1,6 +1,6 @@
 # Squad Team
 
-> Squad Watchtower — VS Code extension for monitoring AI agent squads
+> Watchtower — VS Code extension for monitoring AI agent squads
 
 ## Coordinator
 
@@ -28,7 +28,7 @@
 
 ## Project Context
 
-- **Project:** Squad Watchtower — VS Code Extension
+- **Project:** Watchtower — VS Code Extension
 - **Owner:** Duong
 - **Created:** 2026-04-26
 - **Stack:** TypeScript, VS Code Extension API, React 19 (webviews), @xyflow/react, Zustand, Vitest
@@ -62,7 +62,7 @@ These three projects informed the original Watchtower's design. Use as reference
    - Squad CLI + SDK, VS Code agent integration
 
 ### Key Differentiator
-Squad Watchtower combines ATM's visual graph with Mission Control's dashboard depth, built specifically for Squad framework teams, and running INSIDE VS Code instead of as a separate app. It discovers and monitors all `.squad/` directories on the local machine.
+Watchtower combines ATM's visual graph with Mission Control's dashboard depth, built specifically for Squad framework teams, and running INSIDE VS Code instead of as a separate app. It discovers and monitors all `.squad/` directories on the local machine.
 
 ### Key decisions
   1. Hybrid architecture — webview for graph/dashboard, native VS Code for navigation/commands

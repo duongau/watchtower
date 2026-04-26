@@ -25,20 +25,20 @@ Watchtower stores settings in `~/.copilot/Watchtower/settings.json` with a custo
 ```json
 "contributes": {
   "configuration": {
-    "title": "Squad Watchtower",
+    "title": "Watchtower",
     "properties": {
-      "squadWatchtower.graphLayout": {
+      "watchtower.graphLayout": {
         "type": "string",
         "default": "TB",
         "enum": ["TB", "LR", "BT", "RL", "radial", "grid", "clustered"],
         "description": "Default graph layout direction"
       },
-      "squadWatchtower.showSkillNodes": {
+      "watchtower.showSkillNodes": {
         "type": "boolean",
         "default": true,
         "description": "Show skill nodes in the agent graph"
       },
-      "squadWatchtower.autoRefresh": {
+      "watchtower.autoRefresh": {
         "type": "boolean",
         "default": true,
         "description": "Auto-refresh graph when .squad/ files change"
@@ -52,17 +52,17 @@ Watchtower stores settings in `~/.copilot/Watchtower/settings.json` with a custo
 
 | Desktop Setting | VS Code Setting | Notes |
 |----------------|----------------|-------|
-| graphLayout | squadWatchtower.graphLayout | Same values |
-| showSkillNodes | squadWatchtower.showSkillNodes | Boolean |
-| autoRefresh | squadWatchtower.autoRefresh | New, was implicit |
+| graphLayout | watchtower.graphLayout | Same values |
+| showSkillNodes | watchtower.showSkillNodes | Boolean |
+| autoRefresh | watchtower.autoRefresh | New, was implicit |
 | theme | Drop — VS Code handles themes | Native |
 | port | Drop — no server | Not needed |
 | apiKey | Drop — no HTTP auth | Not needed |
-| mcUrl | squadWatchtower.missionControl.url | MC connection |
-| mcApiKey | squadWatchtower.missionControl.apiKey | Secrets API |
+| mcUrl | watchtower.missionControl.url | MC connection |
+| mcApiKey | watchtower.missionControl.apiKey | Secrets API |
 
 ### Phase 3: Migration script
-- Command: `squadWatchtower.migrateSettings`
+- Command: `watchtower.migrateSettings`
 - Read `~/.copilot/Watchtower/settings.json`
 - Map each key to VS Code setting equivalent
 - Write via `vscode.workspace.getConfiguration().update()`

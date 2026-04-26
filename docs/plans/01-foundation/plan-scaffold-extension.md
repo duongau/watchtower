@@ -64,6 +64,6 @@ Set up the VS Code extension project with proper TypeScript configuration, exten
 ## Success Criteria
 1. `F5` launches Extension Development Host
 2. Extension activates without errors
-3. Activity bar shows Squad Watchtower icon
+3. Activity bar shows Watchtower icon
 4. Commands appear in command palette
 5. `npm run lint` passes with no errors

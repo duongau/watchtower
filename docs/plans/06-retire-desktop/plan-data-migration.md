@@ -16,7 +16,7 @@ Users with existing Watchtower desktop installations have data in SQLite at `~/.
 - [ ] Phase 1: SQLite reader — open existing database, read all tables
 - [ ] Phase 2: JSON writer — transform and write to new file structure
 - [ ] Phase 3: Validation — verify migrated data matches source
-- [ ] Phase 4: Command registration — `squadWatchtower.migrateData` command
+- [ ] Phase 4: Command registration — `watchtower.migrateData` command
 - [ ] Phase 5: Error handling — graceful failures, partial migration support
 
 ## Details
@@ -43,7 +43,7 @@ Transform and write:
 - Warning if any records couldn't be migrated
 
 ### Phase 4: Command
-- Triggered via command palette: "Squad Watchtower: Migrate Desktop Data"
+- Triggered via command palette: "Watchtower: Migrate Desktop Data"
 - Confirmation dialog before starting
 - Progress notification during migration
 - Success/failure notification at end

@@ -9,7 +9,7 @@ tags: [phase-6, retire-desktop, publishing, marketplace]
 
 ## Context
 
-Package the Squad Watchtower extension and publish to the VS Code Marketplace so anyone can install it with one click.
+Package the Watchtower extension and publish to the VS Code Marketplace so anyone can install it with one click.
 
 ## Phases
 

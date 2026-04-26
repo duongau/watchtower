@@ -29,10 +29,10 @@ Watchtower has voice command support via Web Speech API. VS Code provides the `v
 
 ### Phase 2: Command mapping
 Map spoken phrases to commands:
-- "Open graph" → `squadWatchtower.openGraph`
-- "Show mission control" → `squadWatchtower.openMC`
-- "Deploy [agent name]" → `squadWatchtower.deployAgent` with args
-- "Refresh" → `squadWatchtower.refresh`
+- "Open graph" → `watchtower.openGraph`
+- "Show mission control" → `watchtower.openMC`
+- "Deploy [agent name]" → `watchtower.deployAgent` with args
+- "Refresh" → `watchtower.refresh`
 - Fuzzy matching for natural language variations
 
 ### Phase 3: Continuous listening

@@ -26,7 +26,7 @@ Watchtower has a status bar showing CLI version, agent count, and skill count. I
 const squadStatus = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Left, 100);
 squadStatus.text = '$(people) 5 agents';
 squadStatus.tooltip = 'Minato (Lead), Tobirama (Extension), ...';
-squadStatus.command = 'squadWatchtower.openAgentGraph';
+squadStatus.command = 'watchtower.openAgentGraph';
 squadStatus.show();
 ```
 

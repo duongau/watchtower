@@ -3,7 +3,7 @@
 ## Identity
 - **Name:** Tsunade
 - **Role:** Data Engineer
-- **Project:** Squad Watchtower (VS Code Extension)
+- **Project:** Watchtower (VS Code Extension)
 
 ## Responsibilities
 - Data storage design (JSON files replacing SQLite)

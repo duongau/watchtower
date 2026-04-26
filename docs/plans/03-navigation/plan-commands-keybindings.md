@@ -25,35 +25,35 @@ Watchtower has a custom command palette with 30+ commands. In VS Code, these bec
 
 | Command ID | Title | Keybinding |
 |-----------|-------|------------|
-| `squadWatchtower.openGraph` | Squad Watchtower: Open Agent Graph | `Ctrl+Shift+W` |
-| `squadWatchtower.refresh` | Squad Watchtower: Refresh | `Ctrl+Shift+R` |
-| `squadWatchtower.openMC` | Squad Watchtower: Open Mission Control | — |
-| `squadWatchtower.toggleSidebar` | Squad Watchtower: Toggle Sidebar | — |
+| `watchtower.openGraph` | Watchtower: Open Agent Graph | `Ctrl+Shift+W` |
+| `watchtower.refresh` | Watchtower: Refresh | `Ctrl+Shift+R` |
+| `watchtower.openMC` | Watchtower: Open Mission Control | — |
+| `watchtower.toggleSidebar` | Watchtower: Toggle Sidebar | — |
 
 ### Phase 2: Agent commands
 
 | Command ID | Title |
 |-----------|-------|
-| `squadWatchtower.deployAgent` | Squad Watchtower: Deploy Agent |
-| `squadWatchtower.openCharter` | Squad Watchtower: Open Agent Charter |
-| `squadWatchtower.viewHistory` | Squad Watchtower: View Agent History |
-| `squadWatchtower.addAgent` | Squad Watchtower: Add Team Member |
+| `watchtower.deployAgent` | Watchtower: Deploy Agent |
+| `watchtower.openCharter` | Watchtower: Open Agent Charter |
+| `watchtower.viewHistory` | Watchtower: View Agent History |
+| `watchtower.addAgent` | Watchtower: Add Team Member |
 
 ### Phase 3: Session commands
 
 | Command ID | Title |
 |-----------|-------|
-| `squadWatchtower.exportSession` | Squad Watchtower: Export Session |
-| `squadWatchtower.browseSessions` | Squad Watchtower: Browse Sessions |
+| `watchtower.exportSession` | Watchtower: Export Session |
+| `watchtower.browseSessions` | Watchtower: Browse Sessions |
 
 ### Phase 4: Graph commands
 
 | Command ID | Title |
 |-----------|-------|
-| `squadWatchtower.graphLayout` | Squad Watchtower: Change Layout |
-| `squadWatchtower.graphZoomFit` | Squad Watchtower: Zoom to Fit |
-| `squadWatchtower.graphSearch` | Squad Watchtower: Search Graph |
-| `squadWatchtower.graphFilter` | Squad Watchtower: Filter Nodes |
+| `watchtower.graphLayout` | Watchtower: Change Layout |
+| `watchtower.graphZoomFit` | Watchtower: Zoom to Fit |
+| `watchtower.graphSearch` | Watchtower: Search Graph |
+| `watchtower.graphFilter` | Watchtower: Filter Nodes |
 
 ### Phase 5: Keybindings
 - Register via `contributes.keybindings` in package.json

@@ -1,11 +1,11 @@
 ---
-title: "Squad Watchtower: Desktop → VS Code Extension Migration"
+title: "Watchtower: Desktop → VS Code Extension Migration"
 status: not-started
 created: 2026-04-26T00:00:00
 tags: [migration, vscode-extension, watchtower]
 ---
 
-# Squad Watchtower: Desktop → VS Code Extension Migration
+# Watchtower: Desktop → VS Code Extension Migration
 
 ## Context
 

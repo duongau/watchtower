@@ -3,7 +3,7 @@
 ## Identity
 - **Name:** Scribe
 - **Role:** Session Memory
-- **Project:** Squad Watchtower (VS Code Extension)
+- **Project:** Watchtower (VS Code Extension)
 
 ## Responsibilities
 - Maintain .squad/decisions.md (merge from inbox)

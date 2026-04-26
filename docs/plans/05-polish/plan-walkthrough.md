@@ -25,8 +25,8 @@ Watchtower has a GuidedTour component using react-joyride. VS Code has native Wa
 ```json
 "contributes": {
   "walkthroughs": [{
-    "id": "squadWatchtower.getStarted",
-    "title": "Get Started with Squad Watchtower",
+    "id": "watchtower.getStarted",
+    "title": "Get Started with Watchtower",
     "description": "Monitor your AI agent squads from inside VS Code",
     "steps": [...]
   }]
@@ -34,7 +34,7 @@ Watchtower has a GuidedTour component using react-joyride. VS Code has native Wa
 ```
 
 ### Phase 2: Step content
-1. **Welcome** — what Squad Watchtower does, key benefits
+1. **Welcome** — what Watchtower does, key benefits
 2. **Open the Agent Graph** — click to run the open graph command
 3. **Explore the Sidebar** — agents, sessions, skills tree views
 4. **Mission Control** — open the dashboard
@@ -42,7 +42,7 @@ Watchtower has a GuidedTour component using react-joyride. VS Code has native Wa
 
 ### Phase 3: Completion tracking
 - Steps marked complete when their command is run
-- `completionEvents`: `onCommand:squadWatchtower.openGraph`
+- `completionEvents`: `onCommand:watchtower.openGraph`
 - Progress indicator in walkthrough view
 - "Mark All Complete" for experienced users
 
@@ -52,7 +52,7 @@ Watchtower has a GuidedTour component using react-joyride. VS Code has native Wa
 - Check via `when` clause conditions
 
 ### Phase 5: Interactive steps
-- Steps that include command links: `[Open Graph](command:squadWatchtower.openGraph)`
+- Steps that include command links: `[Open Graph](command:watchtower.openGraph)`
 - Steps that open specific files
 - Steps that highlight UI elements
 

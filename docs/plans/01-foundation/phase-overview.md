@@ -30,7 +30,7 @@ See the agent graph inside VS Code. This is the proof of concept — when this p
 | Minato | Architecture review before merging |
 
 ## Acceptance Criteria
-1. `Squad Watchtower: Open Agent Graph` command opens a webview panel
+1. `Watchtower: Open Agent Graph` command opens a webview panel
 2. Webview panel renders a React app with @xyflow/react
 3. Graph shows mock/sample agent nodes with correct styling
 4. Nodes are draggable, zoomable, and display agent information
