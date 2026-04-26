@@ -43,3 +43,53 @@
 **By:** Duong
 **What:** ATM (Agent Team Manager), Mission Control (builderz-labs), and Squad (bradygaster) are reference projects. ATM's visual org chart + Mission Control's dashboard depth + Squad's framework = Watchtower's DNA.
 **Why:** Establishes design language and feature expectations without copying any single project.
+
+### 2026-04-26T14:00:00Z: Squad-centric sidebar hierarchy
+**By:** Hiruzen
+**What:** Use squad-centric tree hierarchy (Option B from plan-sidebar-design.md) — squads as top-level expandable nodes, agents nested under each squad, rather than a flat view.
+**Why:** Multi-squad discovery is a core decision. Users have many squads across different projects. Grouping agents under their squad creates immediate context — you see where an agent lives, not just that it exists. This matches how VS Code's Explorer groups files under workspaces. The flat view would collapse this critical context.
+
+### 2026-04-26T14:01:00Z: Four sidebar tree sections — Squads, Sessions, Skills, Overview
+**By:** Hiruzen
+**What:** The sidebar contains four collapsible sections: Squads (primary, always open), Recent Sessions (cross-squad timeline), Skills (collapsed by default), and Overview (compact live stats).
+**Why:** Studied CDA Extension's single WebviewView sidebar — it's rich but heavy. For Watchtower, native TreeView sections are faster to render, support keyboard navigation, and feel native. The Overview section provides at-a-glance stats without opening a WebviewPanel — inspired by how GitLens puts key info right in the sidebar. Skills collapsed by default because it's reference data, not daily-driver.
+
+### 2026-04-26T14:02:00Z: TreeView for sidebar, not WebviewView
+**By:** Hiruzen
+**What:** Use native VS Code TreeView (TreeDataProvider) for the sidebar, not a WebviewView like CDA Extension uses.
+**Why:** CDA Extension's WebviewView sidebar is essentially a custom web app running in a narrow column — powerful but complex. For Watchtower's sidebar, the data is hierarchical (squads → agents, sessions by time) which is exactly what TreeView excels at. TreeView gives us: free keyboard navigation, native look/feel, context menus, inline actions, drag-and-drop, and zero bundle size. The cost is no custom HTML — but our sidebar doesn't need it. Reserve WebviewView only if we later need a rich sidebar widget (e.g., mini-graph preview).
+
+### 2026-04-26T14:03:00Z: Activity bar icon with badge count
+**By:** Hiruzen
+**What:** Register a dedicated Activity Bar icon for Watchtower with a badge showing active agent count.
+**Why:** Every serious VS Code extension owns an activity bar slot — it's the primary entry point. The badge (e.g., "14" for 14 agents) gives at-a-glance awareness even when the sidebar is closed. CDA Extension does this well with its CDA Cortex icon. We use a telescope/radar motif to evoke "watching over" squads.
+
+### 2026-04-26T14:04:00Z: Dashboard as WebviewPanel, not sidebar
+**By:** Hiruzen
+**What:** The overview dashboard (fleet status, token usage, agent cards, squad health) is a WebviewPanel that opens in the editor area as a tab, not squeezed into the sidebar.
+**Why:** The original Watchtower app had a full-screen Mission Control panel with widget grids, stat bars, and agent cards. This kind of rich layout needs horizontal space and React rendering — a sidebar WebviewView would be too narrow (280px). A WebviewPanel opens like a document tab, can be split/moved, and gets the full editor width. This matches how Thunder Client and MongoDB extensions handle their complex UIs.
+
+### 2026-04-26T14:05:00Z: Status bar shows squad count, active agents, tokens, cost
+**By:** Hiruzen
+**What:** Four status bar items on the left side: squad count, active agent count, token usage today, and estimated cost today.
+**Why:** Status bar is always visible and costs nothing in terms of UI complexity. These four metrics are the "vitals" that a squad manager glances at constantly. CDA Extension does this with a single status bar item — we expand it because Watchtower monitors multiple squads simultaneously. Clicking any item opens the dashboard for detail.
+
+### 2026-04-26T14:06:00Z: Agent status indicators — active/idle/offline with color dots
+**By:** Hiruzen
+**What:** Three agent states: active (green dot), idle (yellow dot), offline (gray dot). Consistent across tree view, dashboard cards, and status bar.
+**Why:** The original Watchtower desktop app used colored accent strips on AgentNode cards. In VS Code's tighter UI, simple colored dots (8px circles) are more legible at small sizes. Green/yellow/gray is universally understood and works well with VS Code's existing semantic colors (`--vscode-testing-iconPassed`, `--vscode-editorWarning-foreground`, `--vscode-descriptionForeground`).
+
+### 2026-04-26T16:00:00Z: Code Review — Extension Scaffold → APPROVE
+**By:** Minato (Lead / Architect)
+**What:** Reviewed extension scaffold (extension.ts, types, esbuild, package.json, tsconfig, launch.json, vitest config, 26 tests). All VS Code extension best practices followed — specific activation events, proper disposable management, dual tsconfig strategy, discriminated union message types.
+**Why:** Clean baseline for incremental feature development. No blockers. Nits: redundant onCommand activation events (auto-registered since VS Code 1.74+), dependencies vs devDependencies for vsix size.
+
+### 2026-04-26T17:00:00Z: Code Review — Message Protocol → APPROVE
+**By:** Minato (Lead / Architect)
+**What:** Reviewed message protocol (messages.ts, MessageBridge.ts, webview bridge.ts, 35 tests). Three-shape design (Request, Response, Push) with discriminated unions, request/response correlation via requestId, proper timeout and cancellation handling.
+**Why:** Architecturally sound. Clean separation between extension bridge (vscode APIs) and webview bridge (DOM APIs). No cross-boundary leaks. Suggestions: GenericResponse weakens the union, push() is redundant wrapper around send().
+
+### 2026-04-26T17:30:00Z: Code Review — Webview Infrastructure → APPROVE
+**By:** Minato (Lead / Architect)
+**What:** Reviewed webview infrastructure (GraphPanelProvider, getWebviewContent, Vite config, webview stub). CSP is strict (nonce-based, no unsafe-inline/eval), resource URIs correct via asWebviewUri(), singleton lifecycle clean, retainContextWhenHidden justified for graph state.
+**Why:** Solid, secure, well-tested. Bridge architecture is an improvement over raw postMessage switch patterns. Nit: push GraphPanelProvider into context.subscriptions for explicit cleanup on deactivation.
