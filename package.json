@@ -12,7 +12,18 @@
     "Visualization",
     "Other"
   ],
-  "activationEvents": [],
+  "activationEvents": [
+    "onCommand:watchtower.openGraph",
+    "onCommand:watchtower.openMissionControl",
+    "onCommand:watchtower.refreshAgents",
+    "onView:watchtower.agents",
+    "onView:watchtower.sessions",
+    "onView:watchtower.skills"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/duongau/watchtower"
+  },
   "main": "./dist/extension.js",
   "contributes": {
     "commands": [
@@ -59,20 +70,28 @@
     }
   },
   "scripts": {
-    "vscode:prepublish": "npm run compile",
+    "vscode:prepublish": "npm run build",
     "compile": "tsc -p ./",
+    "build": "node esbuild.js --production && vite build --config vite.config.webview.ts",
+    "build:webview": "vite build --config vite.config.webview.ts",
     "watch": "tsc -watch -p ./",
+    "watch:webview": "vite build --config vite.config.webview.ts --watch",
     "lint": "tsc --noEmit",
     "test": "vitest run",
     "test:watch": "vitest",
     "package": "vsce package"
   },
   "devDependencies": {
+    "@types/dagre": "^0.7.54",
     "@types/node": "^22.0.0",
+    "@types/react": "^19.2.14",
+    "@types/react-dom": "^19.2.3",
     "@types/vscode": "^1.100.0",
+    "@vitejs/plugin-react": "^4.7.0",
     "@vscode/vsce": "^3.0.0",
-    "sharp": "^0.34.5",
+    "esbuild": "^0.25.0",
     "typescript": "^5.7.0",
+    "vite": "^7.3.2",
     "vitest": "^3.0.0"
   },
   "dependencies": {
