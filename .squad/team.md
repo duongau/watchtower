@@ -17,6 +17,7 @@
 | Hashirama | Frontend Dev | [charter](agents/hashirama/charter.md) | Active |
 | Tsunade | Data Engineer | [charter](agents/tsunade/charter.md) | Active |
 | Kakashi | Tester | [charter](agents/kakashi/charter.md) | Active |
+| Hiruzen | UX Designer | [charter](agents/hiruzen/charter.md) | Active |
 | Scribe | Session Memory | [charter](agents/scribe/charter.md) | Active |
 | Ralph | Work Monitor | — | 🔄 Monitor |
 

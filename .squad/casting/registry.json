@@ -5,6 +5,7 @@
     "hashirama": { "persistent_name": "hashirama", "role": "Frontend Dev", "universe": "Naruto", "created_at": "2026-04-26T00:00:00Z", "legacy_named": false, "status": "active" },
     "tsunade": { "persistent_name": "tsunade", "role": "Data Engineer", "universe": "Naruto", "created_at": "2026-04-26T00:00:00Z", "legacy_named": false, "status": "active" },
     "kakashi": { "persistent_name": "kakashi", "role": "Tester", "universe": "Naruto", "created_at": "2026-04-26T00:00:00Z", "legacy_named": false, "status": "active" },
+    "hiruzen": { "persistent_name": "hiruzen", "role": "UX Designer", "universe": "Naruto", "created_at": "2026-04-26T00:00:00Z", "legacy_named": false, "status": "active" },
     "scribe": { "persistent_name": "scribe", "role": "Session Memory", "universe": null, "created_at": "2026-04-26T00:00:00Z", "legacy_named": false, "exempt": true, "status": "active" },
     "ralph": { "persistent_name": "ralph", "role": "Work Monitor", "universe": null, "created_at": "2026-04-26T00:00:00Z", "legacy_named": false, "exempt": true, "status": "active" }
   }

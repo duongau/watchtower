@@ -5,26 +5,38 @@ created: 2026-04-26T00:00:00
 tags: [migration, vscode-extension, watchtower]
 ---
 
-# Watchtower: Desktop → VS Code Extension Migration
+# Watchtower: VS Code Extension for AI Squad Monitoring
 
 ## Context
 
-Watchtower is a standalone desktop app (Electron/Tauri + React 19 + Express 5 + SQLite) for monitoring AI agent squads. The migration brings this into VS Code as an extension, eliminating context-switching since VS Code is the daily driver. This master plan coordinates six phases, each with its own detailed sub-plans.
+Watchtower is a VS Code extension for monitoring AI agent squads. Starting from a clean baseline — design first, build incrementally. The original desktop app (Electron/Tauri + React + Express + SQLite) serves as feature reference, not a porting target.
 
-**Source repo:** `C:\GitHub\squad-tools\watchtower` (65 React components, 25 API routes, 8 Zustand slices, 9 SQLite tables)
-**Target repo:** `C:\GitHub\squad-tools\squad-watchtower` (VS Code extension)
+**Source reference:** `C:\GitHub\squad-tools\watchtower` (original desktop app, being renamed to watchtower-legacy)
+**This repo:** VS Code extension — built from scratch with VS Code-native patterns
 **Architecture:** Hybrid — WebviewPanels for complex React UI, native VS Code APIs for navigation/commands
 
 ## Phases
 
+- [ ] Phase 0: Design — Surface audit, information architecture, mockups
 - [ ] Phase 1: Foundation — Scaffold extension, webview host, port agent graph
-- [ ] Phase 2: Data Layer — Replace SQLite + Express with extension host services
+- [ ] Phase 2: Data Layer — Extension host services, file watchers, storage
 - [ ] Phase 3: Navigation — Tree views, status bar, commands, keyboard shortcuts
-- [ ] Phase 4: Mission Control — Port dashboard widgets into webview
+- [ ] Phase 4: Mission Control — Dashboard widgets in webview
 - [ ] Phase 5: Polish — Voice, walkthrough, settings, themes, search
-- [ ] Phase 6: Retire Desktop — Remove Electron/Tauri, archive, publish
+- [ ] Phase 6: Retire Desktop — Archive legacy, publish extension
 
 ## Phase Details
+
+### Phase 0: Design
+**Goal:** Map out how Watchtower looks and feels inside VS Code before writing code.
+**Owner:** Hiruzen (UX Designer)
+**Plans:** [00-design/](00-design/)
+- VS Code surface audit — what UI surfaces we use and why
+- Information architecture — what data, where, in what priority
+- Sidebar design — activity bar, tree views, welcome states
+- Webview mockups — agent graph and dashboard layouts
+- Status bar & commands — at-a-glance info, keyboard actions
+- Reference study — learn from CDA Extension, Squad UI, top extensions
 
 ### Phase 1: Foundation
 **Goal:** See the agent graph inside VS Code.

@@ -11,6 +11,7 @@ How to decide who handles what.
 | Webview React components, graph UI, dashboard widgets | Hashirama | @xyflow/react port, webview panels, Mission Control widgets |
 | Data layer, storage, state management, file watchers | Tsunade | JSON storage design, Zustand adaptation, .squad/ file parsing |
 | Testing, quality, edge cases, verification | Kakashi | Vitest tests, extension integration tests, webview contract tests |
+| UX design, mockups, layout, accessibility, theme review | Hiruzen | Wireframes, information architecture, UX review, accessibility audit |
 | Code review | Minato | Review PRs, check quality, validate against architecture |
 | Scope & priorities | Minato | What to build next, trade-offs, decisions |
 | Session logging | Scribe | Automatic — never needs routing |
