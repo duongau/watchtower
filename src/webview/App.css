@@ -52,7 +52,7 @@ body {
 }
 
 .react-flow__controls-button:hover {
-  background: var(--vscode-list-hoverBackground, #2a2d2e);
+  background: var(--vscode-list-hoverBackground);
 }
 
 .react-flow__controls-button svg {
