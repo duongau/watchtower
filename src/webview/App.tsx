@@ -121,18 +121,41 @@ function buildInitialData() {
 // ---------------------------------------------------------------------------
 
 function GraphCanvas() {
-  const initial = useMemo(() => buildInitialData(), []);
-  const [nodes, setNodes, onNodesChange] = useNodesState(initial.nodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initial.edges);
+  const fallback = useMemo(() => buildInitialData(), []);
+  const [nodes, setNodes, onNodesChange] = useNodesState(fallback.nodes);
+  const [edges, setEdges, onEdgesChange] = useEdgesState(fallback.edges);
 
   // Signal ready to extension host on mount
   useEffect(() => {
     bridge.postMessage({ command: 'ready', requestId: 'init' });
   }, []);
 
+  // Request live graph data from extension host
+  useEffect(() => {
+    let cancelled = false;
+
+    bridge
+      .request<{ nodes: Node[]; edges: Edge[] }>('graph:load')
+      .then((data) => {
+        if (cancelled) return;
+        if (data && Array.isArray(data.nodes) && data.nodes.length > 0) {
+          setNodes(data.nodes);
+          setEdges(data.edges);
+        }
+        // If empty or invalid, keep the hardcoded fallback
+      })
+      .catch(() => {
+        // Request failed or timed out — keep hardcoded fallback
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, [setNodes, setEdges]);
+
   // Wire up push handler for future real data
   useEffect(() => {
-    const unsub = bridge.onPush('updateAgents', (_payload: unknown) => {
+    const unsub = bridge.onPush('agent:update', (_payload: unknown) => {
       // Phase 2 Data Layer will populate real agent data here
       // For now, keep sample data
     });
