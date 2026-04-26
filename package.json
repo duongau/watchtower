@@ -70,9 +70,10 @@
   "devDependencies": {
     "@types/node": "^22.0.0",
     "@types/vscode": "^1.100.0",
+    "@vscode/vsce": "^3.0.0",
+    "sharp": "^0.34.5",
     "typescript": "^5.7.0",
-    "vitest": "^3.0.0",
-    "@vscode/vsce": "^3.0.0"
+    "vitest": "^3.0.0"
   },
   "dependencies": {
     "@xyflow/react": "^12.6.0",
