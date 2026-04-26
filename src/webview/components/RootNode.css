@@ -1,0 +1,41 @@
+/* ── RootNode — project / squad root ────────────────────────────────── */
+
+.root-node {
+  min-width: 200px;
+  background: var(--vscode-sideBar-background);
+  border: 2px solid var(--vscode-focusBorder);
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 6px var(--vscode-widget-shadow);
+  font-family: var(--vscode-font-family, -apple-system, 'Segoe UI', sans-serif);
+  color: var(--vscode-editor-foreground);
+}
+
+.root-node--selected {
+  border-color: var(--vscode-button-background);
+}
+
+.root-node__body {
+  padding: 14px 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.root-node__name {
+  font-weight: 700;
+  font-size: 15px;
+}
+
+.root-node__meta {
+  font-size: 11px;
+  color: var(--vscode-descriptionForeground);
+}
+
+.root-node__handle {
+  width: 8px;
+  height: 8px;
+  background: var(--vscode-focusBorder);
+  border: 1px solid var(--vscode-panel-border);
+}
