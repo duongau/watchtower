@@ -22,7 +22,8 @@ class SquadItem extends vscode.TreeItem {
     super(squad.name, vscode.TreeItemCollapsibleState.Expanded);
     this.agents = squad.agents;
     this.squadPath = squad.path;
-    this.description = `${squad.agents.length} agent${squad.agents.length === 1 ? '' : 's'}`;
+    const universe = squad.universe ? `${squad.universe} · ` : '';
+    this.description = `${universe}${squad.agents.length} agent${squad.agents.length === 1 ? '' : 's'}`;
     this.tooltip = new vscode.MarkdownString(
       `**${squad.name}**\n\nUniverse: ${squad.universe ?? 'unknown'}\n\nAgents: ${squad.agents.length}\n\nPath: ${squad.path}`,
     );
