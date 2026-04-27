@@ -1,27 +1,36 @@
 ---
-updated_at: 2026-04-26T19:30:00Z
-focus_area: Phase 1 Foundation COMPLETE — Phase 2 Data Layer next
+updated_at: 2026-04-26T23:30:00Z
+focus_area: Phases 0-3 COMPLETE — Phase 4 Mission Control next
 active_issues: []
 ---
 
 # What We're Focused On
 
 ## Current State
-- **Branch:** `squad/phase-1-foundation` (ready to merge to main)
-- **Phase 0 (Design):** DONE — merged to main.
-- **Phase 1 (Foundation):** ALL 5 sub-plans COMPLETE:
-  1. ✅ Scaffold Extension (Tobirama → Kakashi → Minato approved)
-  2. ✅ Message Protocol (Tobirama → Kakashi → Minato approved)
-  3. ✅ Webview Infrastructure (Tobirama → Kakashi → Minato approved)
-  4. ✅ Commands Registration (done in scaffold)
-  5. ✅ Graph Port (Hashirama → Kakashi 48 tests → Minato approved → Tsunade fixed nits)
+- **Phase 0 (Design):** COMPLETE
+- **Phase 1 (Foundation):** COMPLETE — scaffold, message protocol, webview infrastructure, commands, graph port
+- **Phase 2 (Data Layer):** COMPLETE — storage format, store adaptation, extension services, file watchers, graph data loading
+- **Phase 3 (Navigation):** COMPLETE — activity bar, sidebar tree views, status bar, graph polish
+- **Extension:** Installable via VSIX (`watchtower-0.1.0.vsix`)
+- **Shortcut:** Ctrl+Shift+W opens Watchtower
+
+## Working Features
+- Agent graph webview (ReactFlow with avatar circles, toolbar, smoothstep edges, hover effects)
+- Sidebar tree views: Agents, Sessions, Skills (squad-centric hierarchy)
+- Status bar (squad count, active agents, tokens, cost)
+- File watchers (live .squad/ monitoring with debounced updates)
+- Live data loading (multi-squad discovery across local machine)
 
 ## Stats
-- 124 tests passing across 10 test files
+- 233 tests passing across 22 test files
 - Lint + build clean (esbuild extension + Vite webview)
-- All code reviewed and approved by Minato
 
 ## What's Next
-1. Merge Phase 1 branch to main
-2. Begin Phase 2: Data Layer (5 sub-plans: Storage Format, Store Adaptation, Extension Services, File Watchers, Graph Data Loading)
-3. Pipeline continues: Plan → Build → Test → Review → Fix for each sub-plan
+1. **Phase 4: Mission Control** — dashboard webview with fleet status, token tracking, pipeline timeline, stats widgets
+2. Pipeline continues: Plan → Build → Test → Review → Fix
+
+## Nits Backlog
+- GraphPanelProvider not pushed into `context.subscriptions` for explicit cleanup
+- Session type location (should move to shared types)
+- ServiceRegistry dispose error handling
+- Duplicated dagre layout logic

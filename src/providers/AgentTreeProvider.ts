@@ -22,8 +22,12 @@ class SquadItem extends vscode.TreeItem {
     super(squad.name, vscode.TreeItemCollapsibleState.Expanded);
     this.agents = squad.agents;
     this.squadPath = squad.path;
-    this.description = `${squad.agents.length} agent${squad.agents.length === 1 ? '' : 's'}`;
-    this.iconPath = new vscode.ThemeIcon('folder');
+    const universe = squad.universe ? `${squad.universe} · ` : '';
+    this.description = `${universe}${squad.agents.length} agent${squad.agents.length === 1 ? '' : 's'}`;
+    this.tooltip = new vscode.MarkdownString(
+      `**${squad.name}**\n\nUniverse: ${squad.universe ?? 'unknown'}\n\nAgents: ${squad.agents.length}\n\nPath: ${squad.path}`,
+    );
+    this.iconPath = new vscode.ThemeIcon('folder-library');
   }
 }
 
@@ -34,7 +38,7 @@ class AgentItem extends vscode.TreeItem {
     super(agent.name, vscode.TreeItemCollapsibleState.None);
     this.description = agent.role;
     this.iconPath = new vscode.ThemeIcon(
-      'circle-filled',
+      roleIcon(agent.role),
       new vscode.ThemeColor(statusColor(agent.status)),
     );
     this.tooltip = new vscode.MarkdownString(
@@ -64,6 +68,22 @@ function statusColor(status: AgentStatus): string {
     default:
       return 'descriptionForeground';
   }
+}
+
+function roleIcon(role: string): string {
+  const r = role.toLowerCase();
+  if (r.includes('lead') || r.includes('architect')) return 'crown';
+  if (r.includes('frontend') || r.includes('ui') || r.includes('react')) return 'layout';
+  if (r.includes('extension') || r.includes('api') || r.includes('backend')) return 'plug';
+  if (r.includes('data') || r.includes('storage') || r.includes('database')) return 'database';
+  if (r.includes('test') || r.includes('qa') || r.includes('quality')) return 'shield';
+  if (r.includes('ux') || r.includes('design')) return 'symbol-color';
+  if (r.includes('devops') || r.includes('release')) return 'rocket';
+  if (r.includes('doc') || r.includes('writer')) return 'book';
+  if (r.includes('session') || r.includes('scribe') || r.includes('memory')) return 'notebook';
+  if (r.includes('monitor') || r.includes('ralph') || r.includes('work')) return 'radio-tower';
+  if (r.includes('owner') || r.includes('human')) return 'person';
+  return 'person';
 }
 
 // ---------------------------------------------------------------------------
