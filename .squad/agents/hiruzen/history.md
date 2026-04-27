@@ -54,3 +54,10 @@ Watchtower is a VS Code extension for monitoring AI agent squads. Migrated from 
 - Don't hardcode any colors — always use `var(--vscode-*)` theme variables
 - Don't auto-connect to external services on activate — let the user trigger scans
 - Don't put complex forms in the sidebar — use QuickPick or a WebviewPanel dialog instead
+
+## Completed Work
+
+### 2026-04-26T23:00:00Z — Design Approval + Mockup v3 (Phase 3)
+- Sidebar and graph designs approved by team
+- Mockup v3 (`sidebar-and-overview-v3.html`) used as the visual target for implementation
+- Design decisions drove all Phase 3 sidebar and graph polish work

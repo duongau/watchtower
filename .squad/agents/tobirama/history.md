@@ -40,3 +40,9 @@
 **Tests added:**
 - `test/squad-watcher.test.ts` — 10 tests covering watcher creation, debouncing, event types, logging, disposal, and edge cases
 **Verification:** lint ✅, build ✅, 168/168 tests ✅
+
+### 2026-04-26T23:00:00Z — CSS Extraction Fix + Sidebar Role Icons (Phase 3)
+- Diagnosed and fixed CSS extraction bug — root cause of broken webview rendering
+- CSS was not being extracted properly during Vite build, causing missing styles at runtime
+- Added role icons to sidebar tree view items for agent type differentiation
+- Sidebar polish complete with proper theme compliance
