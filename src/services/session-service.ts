@@ -99,44 +99,54 @@ export class SessionService implements vscode.Disposable {
   /**
    * Parse session metadata from the filename.
    *
-   * Expected patterns:
-   *   - `2026-04-26T14-00-00Z-hiruzen-sidebar-design.md`
-   *   - `2026-04-26T14-00-00Z-session-summary.md`
-   *   - `session-2026-04-26.md`
-   *   - Any .md file — falls back to filename as title
+   * Real-world patterns from our .squad/:
+   *   Log:              `2026-04-26-phase0-and-phase1.md`
+   *   Orchestration:    `2026-04-26-hiruzen-design.md`
+   *   ISO timestamp:    `2026-04-26T14-00-00Z-hiruzen-sidebar-design.md`
    */
   private parseSessionFilename(
     filename: string,
   ): { timestamp: string; agent: string; title: string } | undefined {
     const stem = filename.replace(/\.md$/, '');
 
-    // Pattern 1: ISO-ish timestamp prefix
+    // Pattern 1: ISO-ish timestamp prefix with T separator
     // e.g. 2026-04-26T14-00-00Z-hiruzen-sidebar-design
     const isoMatch = stem.match(
       /^(\d{4}-\d{2}-\d{2}T[\d-]+Z?)-(.+)$/,
     );
     if (isoMatch) {
-      // Restore colons in timestamp (files use hyphens)
       const rawTs = isoMatch[1];
       const timestamp = this.normalizeTimestamp(rawTs);
       const remainder = isoMatch[2];
 
-      // First word of remainder is the agent name
       const parts = remainder.split('-');
-      const agent = parts[0] || 'unknown';
-      const title = parts.slice(1).join(' ') || remainder;
+      const agent = this.capitalizeFirst(parts[0] || 'unknown');
+      const title = parts.slice(1).map(w => this.capitalizeFirst(w)).join(' ') || remainder;
 
       return { timestamp, agent, title };
     }
 
-    // Pattern 2: "session-YYYY-MM-DD" or date-prefixed
-    const dateMatch = stem.match(/(\d{4}-\d{2}-\d{2})/);
+    // Pattern 2: Date prefix without T separator
+    // e.g. 2026-04-26-hiruzen-design or 2026-04-26-phase0-and-phase1
+    const dateMatch = stem.match(/^(\d{4}-\d{2}-\d{2})-(.+)$/);
     if (dateMatch) {
-      return {
-        timestamp: dateMatch[1],
-        agent: 'unknown',
-        title: stem.replace(dateMatch[0], '').replace(/^-|-$/g, '').replace(/-/g, ' ') || stem,
-      };
+      const timestamp = dateMatch[1];
+      const remainder = dateMatch[2];
+      const parts = remainder.split('-');
+
+      // Heuristic: if first word looks like an agent name (lowercase, not a common word)
+      const commonWords = ['phase', 'session', 'summary', 'report', 'all', 'full'];
+      const firstWord = parts[0]?.toLowerCase() || '';
+      const isAgentName = firstWord.length > 0 && !commonWords.includes(firstWord) && !/^\d/.test(firstWord);
+
+      if (isAgentName) {
+        const agent = this.capitalizeFirst(parts[0]);
+        const title = parts.slice(1).map(w => this.capitalizeFirst(w)).join(' ') || remainder;
+        return { timestamp, agent, title };
+      } else {
+        const title = parts.map(w => this.capitalizeFirst(w)).join(' ');
+        return { timestamp, agent: 'Team', title };
+      }
     }
 
     // Fallback — use filename as title, no timestamp
@@ -156,6 +166,11 @@ export class SessionService implements vscode.Disposable {
       return `${match[1]}T${match[2]}:${match[3]}:${match[4]}${match[5] || 'Z'}`;
     }
     return raw;
+  }
+
+  private capitalizeFirst(s: string): string {
+    if (!s) return s;
+    return s.charAt(0).toUpperCase() + s.slice(1);
   }
 
   // -----------------------------------------------------------------------

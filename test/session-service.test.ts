@@ -59,12 +59,12 @@ describe('SessionService', () => {
       expect(sessions).toHaveLength(2);
 
       // Sorted newest first
-      expect(sessions[0].agent).toBe('hiruzen');
-      expect(sessions[0].title).toBe('sidebar design');
+      expect(sessions[0].agent).toBe('Hiruzen');
+      expect(sessions[0].title).toBe('Sidebar Design');
       expect(sessions[0].timestamp).toBe('2026-04-26T14:00:00Z');
 
-      expect(sessions[1].agent).toBe('minato');
-      expect(sessions[1].title).toBe('code review');
+      expect(sessions[1].agent).toBe('Minato');
+      expect(sessions[1].title).toBe('Code Review');
       expect(sessions[1].timestamp).toBe('2026-04-25T10:30:00Z');
     });
 
@@ -90,8 +90,8 @@ describe('SessionService', () => {
 
       expect(sessions).toHaveLength(2);
       // orchestration-log entry is newer
-      expect(sessions[0].agent).toBe('coordinator');
-      expect(sessions[1].agent).toBe('tsunade');
+      expect(sessions[0].agent).toBe('Coordinator');
+      expect(sessions[1].agent).toBe('Tsunade');
     });
 
     it('skips non-.md files', async () => {
@@ -130,7 +130,8 @@ describe('SessionService', () => {
       const sessions = await service.listSessions(['/projects/watchtower']);
 
       expect(sessions).toHaveLength(1);
-      expect(sessions[0].timestamp).toBe('2026-04-26');
+      expect(sessions[0].agent).toBe('unknown');
+      expect(sessions[0].timestamp).toBe('');
     });
 
     it('aggregates sessions across multiple squads', async () => {
