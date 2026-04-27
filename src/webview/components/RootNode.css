@@ -1,6 +1,8 @@
 /* ── RootNode — project / squad root ────────────────────────────────── */
 
 .root-node {
+  width: 220px;
+  max-width: 220px;
   min-width: 220px;
   background: var(--vscode-sideBar-background);
   border: 2px solid var(--vscode-focusBorder);

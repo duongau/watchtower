@@ -74,6 +74,7 @@ function buildFallbackData(): { nodes: Node[]; edges: Edge[] } {
     id: 'root',
     type: 'root',
     position: { x: 0, y: 0 },
+    style: { width: 220 },
     data: { label: 'Watchtower', agentCount: SAMPLE_AGENTS.length, universe: 'Hokages' },
   };
 
@@ -81,6 +82,7 @@ function buildFallbackData(): { nodes: Node[]; edges: Edge[] } {
     id: agent.id,
     type: 'agent',
     position: { x: 0, y: 0 },
+    style: { width: 200 },
     data: {
       name: agent.name,
       role: agent.role,

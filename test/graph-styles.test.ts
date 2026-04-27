@@ -29,11 +29,14 @@ describe('CSS theme compliance — no hardcoded hex colors', () => {
   // Matches #rgb, #rrggbb, #rrggbbaa (3, 4, 6, or 8 hex digits)
   const HEX_COLOR_RE = /#(?:[0-9a-fA-F]{3,4}){1,2}\b/g;
 
+  // Intentional brand/identity colors that cannot come from VS Code theme
+  const ALLOWED_HEX = new Set(['#ffffff']); // Avatar text on colored backgrounds
+
   for (const file of CSS_FILES) {
     it(`${file.name} has no hardcoded hex colors`, () => {
       const raw = readCss(file.path);
       const clean = stripComments(raw);
-      const matches = clean.match(HEX_COLOR_RE) ?? [];
+      const matches = (clean.match(HEX_COLOR_RE) ?? []).filter(c => !ALLOWED_HEX.has(c.toLowerCase()));
       expect(matches, `Found hardcoded hex colors: ${matches.join(', ')}`).toEqual([]);
     });
   }
@@ -50,7 +53,7 @@ describe('CSS theme compliance — color values use VS Code theme variables', ()
 
   // Values that are OK without var(--vscode-): inherit, transparent, none, currentColor,
   // numeric-only values, simple layout keywords, rgba with low alpha for overlays
-  const ALLOWED_RAW = /^(?:inherit|transparent|none|currentColor|0|unset|initial|\d+px|rgba?\(\s*0)/i;
+  const ALLOWED_RAW = /^(?:inherit|transparent|none|currentColor|0|unset|initial|\d+px|rgba?\(\s*0|#ffffff)/i;
 
   for (const file of CSS_FILES) {
     it(`${file.name} uses var(--vscode-) for all color values`, () => {

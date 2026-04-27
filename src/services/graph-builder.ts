@@ -12,10 +12,10 @@ import type { AgentStatus, ParsedSquad } from '../types/index.js';
 // Node sizes — must match the CSS dimensions of custom node components
 // ---------------------------------------------------------------------------
 
-const ROOT_WIDTH = 200;
-const ROOT_HEIGHT = 60;
-const AGENT_WIDTH = 180;
-const AGENT_HEIGHT = 80;
+const ROOT_WIDTH = 220;
+const ROOT_HEIGHT = 70;
+const AGENT_WIDTH = 200;
+const AGENT_HEIGHT = 100;
 
 // ---------------------------------------------------------------------------
 // Layout
@@ -106,9 +106,11 @@ function buildSingleSquadGraph(squad: ParsedSquad): { nodes: Node[]; edges: Edge
     id: `root-${squadId}`,
     type: 'root',
     position: { x: 0, y: 0 },
+    style: { width: ROOT_WIDTH },
     data: {
       label: squad.name,
       agentCount: squad.agents.length,
+      universe: squad.universe,
     },
   };
 
@@ -117,6 +119,7 @@ function buildSingleSquadGraph(squad: ParsedSquad): { nodes: Node[]; edges: Edge
     id: `agent-${squadId}-${sanitizeId(agent.name)}`,
     type: 'agent',
     position: { x: 0, y: 0 },
+    style: { width: AGENT_WIDTH },
     data: {
       name: agent.name,
       role: agent.role,
