@@ -1,6 +1,9 @@
 import * as vscode from 'vscode';
 import { GraphPanelProvider } from './providers/GraphPanelProvider.js';
 import { SquadWatcher } from './services/squad-watcher.js';
+import { ServiceRegistry } from './services/service-registry.js';
+import { GraphService } from './services/graph-service.js';
+import { SessionService } from './services/session-service.js';
 
 let outputChannel: vscode.OutputChannel;
 
@@ -8,6 +11,13 @@ export function activate(context: vscode.ExtensionContext) {
   outputChannel = vscode.window.createOutputChannel('Watchtower');
   context.subscriptions.push(outputChannel);
   outputChannel.appendLine('Watchtower activating...');
+
+  // Service registry — disposes all services on deactivation
+  const registry = new ServiceRegistry();
+  context.subscriptions.push(registry);
+
+  const graphService = registry.register('graph', new GraphService(outputChannel));
+  const sessionService = registry.register('session', new SessionService(outputChannel));
 
   // File system watchers for .squad/ directories
   const squadWatcher = new SquadWatcher(outputChannel);
@@ -17,7 +27,7 @@ export function activate(context: vscode.ExtensionContext) {
   // Register commands
   context.subscriptions.push(
     vscode.commands.registerCommand('watchtower.openGraph', () => {
-      GraphPanelProvider.createOrShow(context, outputChannel);
+      GraphPanelProvider.createOrShow(context, outputChannel, graphService, sessionService);
     })
   );
 

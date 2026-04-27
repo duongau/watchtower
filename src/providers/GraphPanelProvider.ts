@@ -6,10 +6,8 @@
 import * as vscode from 'vscode';
 import { MessageBridge } from '../services/MessageBridge.js';
 import { getWebviewContent } from './getWebviewContent.js';
-import { loadSquadFromPath } from '../services/squad-parser.js';
-import { buildGraph } from '../services/graph-builder.js';
-import { discoverSquads } from '../services/squad-discovery.js';
-import type { Agent, Squad } from '../types/index.js';
+import { GraphService } from '../services/graph-service.js';
+import { SessionService } from '../services/session-service.js';
 import type { ExtensionToWebviewMessage } from '../types/messages.js';
 
 export class GraphPanelProvider implements vscode.Disposable {
@@ -32,13 +30,15 @@ export class GraphPanelProvider implements vscode.Disposable {
   public static createOrShow(
     context: vscode.ExtensionContext,
     outputChannel: vscode.OutputChannel,
+    graphService: GraphService,
+    sessionService: SessionService,
   ): GraphPanelProvider {
     if (GraphPanelProvider.instance?.panel) {
       GraphPanelProvider.instance.panel.reveal(vscode.ViewColumn.One);
       return GraphPanelProvider.instance;
     }
 
-    const provider = GraphPanelProvider.instance ?? new GraphPanelProvider(context, outputChannel);
+    const provider = GraphPanelProvider.instance ?? new GraphPanelProvider(context, outputChannel, graphService, sessionService);
     GraphPanelProvider.instance = provider;
     provider.createPanel();
     return provider;
@@ -51,6 +51,8 @@ export class GraphPanelProvider implements vscode.Disposable {
   private constructor(
     private readonly context: vscode.ExtensionContext,
     private readonly outputChannel: vscode.OutputChannel,
+    private readonly graphService: GraphService,
+    private readonly sessionService: SessionService,
   ) {}
 
   // -----------------------------------------------------------------------
@@ -111,42 +113,18 @@ export class GraphPanelProvider implements vscode.Disposable {
     });
 
     this.bridge.onRequest('agent:list', async () => {
-      const squads = await this.loadSquads();
-      const agents: Agent[] = squads.flatMap((s) =>
-        s.agents.map((a) => ({ ...a, id: `${s.name}-${a.name}`.toLowerCase(), squadPath: s.path })),
-      );
+      const agents = await this.graphService.getAgents();
       return { agents };
     });
 
     this.bridge.onRequest('squad:list', async () => {
-      const parsed = await this.loadSquads();
-      const squads: Squad[] = parsed.map((p) => ({
-        name: p.name,
-        path: p.path,
-        universe: p.universe,
-        agents: p.agents.map((a) => ({
-          id: `${p.name}-${a.name}`.toLowerCase(),
-          name: a.name,
-          role: a.role,
-          status: a.status,
-          model: a.model,
-          squadPath: p.path,
-        })),
-      }));
+      const squads = await this.graphService.getSquadList();
       return { squads };
     });
 
     this.bridge.onRequest('graph:load', async () => {
       try {
-        const squads = await this.loadSquads();
-        if (squads.length === 0) {
-          this.outputChannel.appendLine('[GraphPanel] No squads found — sending empty graph');
-          return { nodes: [], edges: [] };
-        }
-        const { nodes, edges } = buildGraph(squads);
-        this.outputChannel.appendLine(
-          `[GraphPanel] Graph built: ${nodes.length} nodes, ${edges.length} edges from ${squads.length} squad(s)`,
-        );
+        const { nodes, edges } = await this.graphService.loadGraph();
         return { nodes, edges };
       } catch (err) {
         const msg = err instanceof Error ? err.message : String(err);
@@ -154,12 +132,19 @@ export class GraphPanelProvider implements vscode.Disposable {
         return { nodes: [], edges: [] };
       }
     });
-  }
 
-  private async loadSquads() {
-    const paths = await discoverSquads();
-    const squads = await Promise.all(paths.map((p) => loadSquadFromPath(p)));
-    return squads;
+    this.bridge.onRequest('session:list', async () => {
+      try {
+        const squads = await this.graphService.getSquads();
+        const squadPaths = squads.map((s) => s.path);
+        const sessions = await this.sessionService.listSessions(squadPaths);
+        return { sessions };
+      } catch (err) {
+        const msg = err instanceof Error ? err.message : String(err);
+        this.outputChannel.appendLine(`[GraphPanel] Error listing sessions: ${msg}`);
+        return { sessions: [] };
+      }
+    });
   }
 
   private onPanelDisposed(): void {
@@ -184,8 +169,7 @@ export class GraphPanelProvider implements vscode.Disposable {
     }
 
     try {
-      const squads = await this.loadSquads();
-      const { nodes, edges } = buildGraph(squads);
+      const { nodes, edges } = await this.graphService.loadGraph();
       this.bridge.push({
         command: 'graph:update',
         payload: { nodes, edges },

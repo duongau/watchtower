@@ -44,8 +44,8 @@ describe('activate()', () => {
 
   it('pushes disposables to context.subscriptions', () => {
     activate(context as any);
-    // 1 output channel + 1 squad watcher + 3 commands = 5 disposables
-    expect(context.subscriptions.length).toBe(5);
+    // 1 output channel + 1 service registry + 1 squad watcher + 3 commands = 6 disposables
+    expect(context.subscriptions.length).toBe(6);
   });
 });
 

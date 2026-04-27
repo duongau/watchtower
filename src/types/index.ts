@@ -15,6 +15,9 @@ export type {
   RequestHandler,
 } from './messages.js';
 
+// Re-export service types needed by both sides
+export type { Session } from '../services/session-service.js';
+
 // ---------------------------------------------------------------------------
 // Agent
 // ---------------------------------------------------------------------------
