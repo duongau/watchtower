@@ -20,15 +20,17 @@ interface SampleAgent {
   role: string;
   status: AgentStatus;
   model: string;
+  initials: string;
+  avatarColor: string;
 }
 
 const SAMPLE_AGENTS: SampleAgent[] = [
-  { id: 'minato', name: 'Minato', role: 'Lead / Architect', status: 'active', model: 'Opus 4.6' },
-  { id: 'tobirama', name: 'Tobirama', role: 'Extension API', status: 'active', model: 'Opus 4.6' },
-  { id: 'hiruzen', name: 'Hiruzen', role: 'UX Designer', status: 'active', model: 'Opus 4.6' },
-  { id: 'hashirama', name: 'Hashirama', role: 'Frontend Dev', status: 'idle', model: 'Opus 4.6' },
-  { id: 'tsunade', name: 'Tsunade', role: 'Data Engineer', status: 'idle', model: 'GPT 5.3' },
-  { id: 'kakashi', name: 'Kakashi', role: 'Tester', status: 'idle', model: 'GPT 5.3' },
+  { id: 'minato', name: 'Minato', role: 'Lead / Architect', status: 'active', model: 'Opus 4.6', initials: 'MI', avatarColor: '#c0392b' },
+  { id: 'tobirama', name: 'Tobirama', role: 'Extension API', status: 'active', model: 'Opus 4.6', initials: 'TO', avatarColor: '#c0392b' },
+  { id: 'hiruzen', name: 'Hiruzen', role: 'UX Designer', status: 'active', model: 'Opus 4.6', initials: 'HI', avatarColor: '#c0392b' },
+  { id: 'hashirama', name: 'Hashirama', role: 'Frontend Dev', status: 'idle', model: 'Opus 4.6', initials: 'HA', avatarColor: '#c0392b' },
+  { id: 'tsunade', name: 'Tsunade', role: 'Data Engineer', status: 'idle', model: 'GPT 5.3', initials: 'TS', avatarColor: '#c0392b' },
+  { id: 'kakashi', name: 'Kakashi', role: 'Tester', status: 'idle', model: 'Haiku 4.5', initials: 'KA', avatarColor: '#c0392b' },
 ];
 
 // ---------------------------------------------------------------------------
@@ -41,8 +43,8 @@ function applyDagreLayout(nodes: Node[], edges: Edge[]): Node[] {
   g.setDefaultEdgeLabel(() => ({}));
 
   for (const node of nodes) {
-    const width = node.type === 'root' ? 200 : 180;
-    const height = node.type === 'root' ? 60 : 80;
+    const width = node.type === 'root' ? 220 : 200;
+    const height = node.type === 'root' ? 70 : 100;
     g.setNode(node.id, { width, height });
   }
 
@@ -54,8 +56,8 @@ function applyDagreLayout(nodes: Node[], edges: Edge[]): Node[] {
 
   return nodes.map((node) => {
     const pos = g.node(node.id);
-    const width = node.type === 'root' ? 200 : 180;
-    const height = node.type === 'root' ? 60 : 80;
+    const width = node.type === 'root' ? 220 : 200;
+    const height = node.type === 'root' ? 70 : 100;
     return {
       ...node,
       position: { x: pos.x - width / 2, y: pos.y - height / 2 },
@@ -72,18 +74,22 @@ function buildFallbackData(): { nodes: Node[]; edges: Edge[] } {
     id: 'root',
     type: 'root',
     position: { x: 0, y: 0 },
-    data: { label: 'Watchtower', agentCount: SAMPLE_AGENTS.length },
+    style: { width: 220 },
+    data: { label: 'Watchtower', agentCount: SAMPLE_AGENTS.length, universe: 'Hokages' },
   };
 
   const agentNodes: Node[] = SAMPLE_AGENTS.map((agent) => ({
     id: agent.id,
     type: 'agent',
     position: { x: 0, y: 0 },
+    style: { width: 200 },
     data: {
       name: agent.name,
       role: agent.role,
       status: agent.status,
       model: agent.model,
+      initials: agent.initials,
+      avatarColor: agent.avatarColor,
     },
   }));
 
