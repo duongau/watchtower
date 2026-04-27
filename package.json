@@ -18,6 +18,9 @@
     "onCommand:watchtower.refreshAgents",
     "onCommand:watchtower.openCharter",
     "onCommand:watchtower.refreshAll",
+    "onCommand:watchtower.scanSquads",
+    "onCommand:watchtower.openDecisions",
+    "onCommand:watchtower.focusAgents",
     "onView:watchtower.agents",
     "onView:watchtower.sessions",
     "onView:watchtower.skills"
@@ -55,6 +58,21 @@
         "title": "Refresh All",
         "category": "Watchtower",
         "icon": "$(refresh)"
+      },
+      {
+        "command": "watchtower.scanSquads",
+        "title": "Scan for Squads",
+        "category": "Watchtower"
+      },
+      {
+        "command": "watchtower.openDecisions",
+        "title": "Open Decisions",
+        "category": "Watchtower"
+      },
+      {
+        "command": "watchtower.focusAgents",
+        "title": "Focus Agents View",
+        "category": "Watchtower"
       }
     ],
     "viewsContainers": {
@@ -101,7 +119,14 @@
           "when": "false"
         }
       ]
-    }
+    },
+    "keybindings": [
+      {
+        "command": "watchtower.openGraph",
+        "key": "ctrl+shift+w",
+        "mac": "cmd+shift+w"
+      }
+    ]
   },
   "scripts": {
     "vscode:prepublish": "npm run build",
