@@ -1,4 +1,4 @@
-import { useEffect, useCallback, useMemo } from 'react';
+import { useEffect, useCallback } from 'react';
 import {
   ReactFlow,
   ReactFlowProvider,
@@ -6,15 +6,12 @@ import {
   Background,
   BackgroundVariant,
   MiniMap,
-  useNodesState,
-  useEdgesState,
   type NodeTypes,
   type Node,
-  type Edge,
 } from '@xyflow/react';
-import dagre from 'dagre';
 import { AgentNode } from './components/AgentNode';
 import { RootNode } from './components/RootNode';
+import { useWatchtowerStore } from './store';
 import * as bridge from './services/bridge';
 import type { AgentStatus } from '../types/index.js';
 import './App.css';
@@ -29,115 +26,24 @@ const nodeTypes: NodeTypes = {
 };
 
 // ---------------------------------------------------------------------------
-// Sample Hokages data
-// ---------------------------------------------------------------------------
-
-interface SampleAgent {
-  id: string;
-  name: string;
-  role: string;
-  status: AgentStatus;
-  model: string;
-}
-
-const SAMPLE_AGENTS: SampleAgent[] = [
-  { id: 'minato', name: 'Minato', role: 'Lead / Architect', status: 'active', model: 'Opus 4.6' },
-  { id: 'tobirama', name: 'Tobirama', role: 'Extension API', status: 'active', model: 'Opus 4.6' },
-  { id: 'hiruzen', name: 'Hiruzen', role: 'UX Designer', status: 'active', model: 'Opus 4.6' },
-  { id: 'hashirama', name: 'Hashirama', role: 'Frontend Dev', status: 'idle', model: 'Opus 4.6' },
-  { id: 'tsunade', name: 'Tsunade', role: 'Data Engineer', status: 'idle', model: 'GPT 5.3' },
-  { id: 'kakashi', name: 'Kakashi', role: 'Tester', status: 'idle', model: 'GPT 5.3' },
-];
-
-// ---------------------------------------------------------------------------
-// Dagre layout helper
-// ---------------------------------------------------------------------------
-
-function applyDagreLayout(nodes: Node[], edges: Edge[]): Node[] {
-  const g = new dagre.graphlib.Graph();
-  g.setGraph({ rankdir: 'TB', nodesep: 40, ranksep: 80 });
-  g.setDefaultEdgeLabel(() => ({}));
-
-  for (const node of nodes) {
-    const width = node.type === 'root' ? 200 : 180;
-    const height = node.type === 'root' ? 60 : 80;
-    g.setNode(node.id, { width, height });
-  }
-
-  for (const edge of edges) {
-    g.setEdge(edge.source, edge.target);
-  }
-
-  dagre.layout(g);
-
-  return nodes.map((node) => {
-    const pos = g.node(node.id);
-    const width = node.type === 'root' ? 200 : 180;
-    const height = node.type === 'root' ? 60 : 80;
-    return {
-      ...node,
-      position: { x: pos.x - width / 2, y: pos.y - height / 2 },
-    };
-  });
-}
-
-// ---------------------------------------------------------------------------
-// Build initial nodes & edges
-// ---------------------------------------------------------------------------
-
-function buildInitialData() {
-  const rootNode: Node = {
-    id: 'root',
-    type: 'root',
-    position: { x: 0, y: 0 },
-    data: { label: 'Watchtower', agentCount: SAMPLE_AGENTS.length },
-  };
-
-  const agentNodes: Node[] = SAMPLE_AGENTS.map((agent) => ({
-    id: agent.id,
-    type: 'agent',
-    position: { x: 0, y: 0 },
-    data: {
-      name: agent.name,
-      role: agent.role,
-      status: agent.status,
-      model: agent.model,
-    },
-  }));
-
-  const edges: Edge[] = SAMPLE_AGENTS.map((agent) => ({
-    id: `root-${agent.id}`,
-    source: 'root',
-    target: agent.id,
-  }));
-
-  const allNodes = [rootNode, ...agentNodes];
-  const laidOut = applyDagreLayout(allNodes, edges);
-  return { nodes: laidOut, edges };
-}
-
-// ---------------------------------------------------------------------------
 // Inner graph component (must be inside ReactFlowProvider)
 // ---------------------------------------------------------------------------
 
 function GraphCanvas() {
-  const initial = useMemo(() => buildInitialData(), []);
-  const [nodes, setNodes, onNodesChange] = useNodesState(initial.nodes);
-  const [edges, setEdges, onEdgesChange] = useEdgesState(initial.edges);
+  // Individual selectors — React 19 safe (no object destructuring)
+  const nodes = useWatchtowerStore((s) => s.nodes);
+  const edges = useWatchtowerStore((s) => s.edges);
+  const isLoading = useWatchtowerStore((s) => s.isLoading);
+  const error = useWatchtowerStore((s) => s.error);
+  const onNodesChange = useWatchtowerStore((s) => s.onNodesChange);
+  const onEdgesChange = useWatchtowerStore((s) => s.onEdgesChange);
+  const loadGraph = useWatchtowerStore((s) => s.loadGraph);
 
-  // Signal ready to extension host on mount
+  // Signal ready to extension host and load graph on mount
   useEffect(() => {
     bridge.postMessage({ command: 'ready', requestId: 'init' });
-  }, []);
-
-  // Wire up push handler for future real data
-  useEffect(() => {
-    const unsub = bridge.onPush('updateAgents', (_payload: unknown) => {
-      // Phase 2 Data Layer will populate real agent data here
-      // For now, keep sample data
-    });
-    return unsub;
-  }, []);
+    loadGraph();
+  }, [loadGraph]);
 
   const minimapNodeColor = useCallback((node: Node) => {
     if (node.type === 'root') return 'var(--vscode-focusBorder)';
@@ -146,6 +52,24 @@ function GraphCanvas() {
     if (status === 'idle') return 'var(--vscode-editorWarning-foreground)';
     return 'var(--vscode-descriptionForeground)';
   }, []);
+
+  // Loading state — no data yet
+  if (isLoading && nodes.length === 0) {
+    return (
+      <div className="graph-message">
+        <span className="graph-message-text">Loading agent graph…</span>
+      </div>
+    );
+  }
+
+  // Error state — no data available
+  if (error && nodes.length === 0) {
+    return (
+      <div className="graph-message graph-message--error">
+        <span className="graph-message-text">{error}</span>
+      </div>
+    );
+  }
 
   return (
     <ReactFlow

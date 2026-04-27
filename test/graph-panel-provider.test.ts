@@ -1,5 +1,7 @@
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 import { GraphPanelProvider } from '../src/providers/GraphPanelProvider';
+import { GraphService } from '../src/services/graph-service';
+import { SessionService } from '../src/services/session-service';
 import { window, mockPanel, mockWebview } from './__mocks__/vscode';
 
 // Reset the singleton between tests by accessing the private static field
@@ -18,6 +20,12 @@ function makeOutputChannel() {
   return window.createOutputChannel('Watchtower');
 }
 
+function makeServices(out: any) {
+  const graphService = new GraphService(out);
+  const sessionService = new SessionService(out);
+  return { graphService, sessionService };
+}
+
 describe('GraphPanelProvider', () => {
   beforeEach(() => {
     vi.clearAllMocks();
@@ -30,8 +38,9 @@ describe('GraphPanelProvider', () => {
     it('creates a webview panel on first call', () => {
       const ctx = makeContext();
       const out = makeOutputChannel();
+      const { graphService, sessionService } = makeServices(out);
 
-      GraphPanelProvider.createOrShow(ctx as any, out as any);
+      GraphPanelProvider.createOrShow(ctx as any, out as any, graphService, sessionService);
 
       expect(window.createWebviewPanel).toHaveBeenCalledTimes(1);
       expect(window.createWebviewPanel).toHaveBeenCalledWith(
@@ -48,9 +57,10 @@ describe('GraphPanelProvider', () => {
     it('returns the same provider on second call (singleton)', () => {
       const ctx = makeContext();
       const out = makeOutputChannel();
+      const { graphService, sessionService } = makeServices(out);
 
-      const first = GraphPanelProvider.createOrShow(ctx as any, out as any);
-      const second = GraphPanelProvider.createOrShow(ctx as any, out as any);
+      const first = GraphPanelProvider.createOrShow(ctx as any, out as any, graphService, sessionService);
+      const second = GraphPanelProvider.createOrShow(ctx as any, out as any, graphService, sessionService);
 
       expect(first).toBe(second);
       // Panel was created once, then revealed
@@ -61,8 +71,9 @@ describe('GraphPanelProvider', () => {
     it('sets enableScripts and retainContextWhenHidden in panel options', () => {
       const ctx = makeContext();
       const out = makeOutputChannel();
+      const { graphService, sessionService } = makeServices(out);
 
-      GraphPanelProvider.createOrShow(ctx as any, out as any);
+      GraphPanelProvider.createOrShow(ctx as any, out as any, graphService, sessionService);
 
       const options = window.createWebviewPanel.mock.calls[0][3];
       expect(options.enableScripts).toBe(true);
@@ -72,8 +83,9 @@ describe('GraphPanelProvider', () => {
     it('sets webview HTML content', () => {
       const ctx = makeContext();
       const out = makeOutputChannel();
+      const { graphService, sessionService } = makeServices(out);
 
-      GraphPanelProvider.createOrShow(ctx as any, out as any);
+      GraphPanelProvider.createOrShow(ctx as any, out as any, graphService, sessionService);
 
       expect(mockWebview.html).toContain('<!DOCTYPE html>');
       expect(mockWebview.html).toContain('<div id="root">');
@@ -84,8 +96,9 @@ describe('GraphPanelProvider', () => {
     it('disposes the panel and clears the singleton', () => {
       const ctx = makeContext();
       const out = makeOutputChannel();
+      const { graphService, sessionService } = makeServices(out);
 
-      const provider = GraphPanelProvider.createOrShow(ctx as any, out as any);
+      const provider = GraphPanelProvider.createOrShow(ctx as any, out as any, graphService, sessionService);
 
       // Simulate the onDidDispose callback firing when panel.dispose() is called
       const onDidDisposeCb = mockPanel.onDidDispose.mock.calls[0][0];
@@ -100,7 +113,7 @@ describe('GraphPanelProvider', () => {
       // After disposal, createOrShow should create a fresh panel
       vi.clearAllMocks();
       mockWebview.html = '';
-      GraphPanelProvider.createOrShow(ctx as any, out as any);
+      GraphPanelProvider.createOrShow(ctx as any, out as any, graphService, sessionService);
       expect(window.createWebviewPanel).toHaveBeenCalledTimes(1);
     });
   });

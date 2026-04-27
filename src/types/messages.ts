@@ -7,6 +7,7 @@
 // ---------------------------------------------------------------------------
 
 import type { Agent, Squad } from './index.js';
+import type { Session } from '../services/session-service.js';
 
 // ---------------------------------------------------------------------------
 // Base message shapes
@@ -48,6 +49,8 @@ export type WebviewToExtensionMessage =
   | RequestMessage<'agent:get', { agentId: string }>
   // Squads
   | RequestMessage<'squad:list'>
+  // Sessions
+  | RequestMessage<'session:list'>
   // Capabilities
   | RequestMessage<'capabilities:get'>
   // Commands
@@ -65,6 +68,7 @@ export type GraphLoadResponse = ResponseMessage<'graph:load', { nodes: unknown[]
 export type AgentListResponse = ResponseMessage<'agent:list', { agents: Agent[] }>;
 export type AgentGetResponse = ResponseMessage<'agent:get', { agent: Agent }>;
 export type SquadListResponse = ResponseMessage<'squad:list', { squads: Squad[] }>;
+export type SessionListResponse = ResponseMessage<'session:list', { sessions: Session[] }>;
 export type CapabilitiesGetResponse = ResponseMessage<'capabilities:get', { capabilities: string[] }>;
 export type CommandExecuteResponse = ResponseMessage<'command:execute', { result?: unknown }>;
 export type GenericResponse = ResponseMessage<string, unknown>;
@@ -86,6 +90,7 @@ export type ExtensionToWebviewMessage =
   | AgentListResponse
   | AgentGetResponse
   | SquadListResponse
+  | SessionListResponse
   | CapabilitiesGetResponse
   | CommandExecuteResponse
   | GenericResponse

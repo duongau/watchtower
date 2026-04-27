@@ -47,6 +47,28 @@ export const workspace = {
     update: vi.fn(),
   })),
   workspaceFolders: [],
+  fs: {
+    readFile: vi.fn(),
+    readDirectory: vi.fn(),
+    stat: vi.fn(),
+    writeFile: vi.fn(),
+    delete: vi.fn(),
+    createDirectory: vi.fn(),
+  },
+  createFileSystemWatcher: vi.fn(() => ({
+    onDidChange: vi.fn(() => ({ dispose: vi.fn() })),
+    onDidCreate: vi.fn(() => ({ dispose: vi.fn() })),
+    onDidDelete: vi.fn(() => ({ dispose: vi.fn() })),
+    dispose: vi.fn(),
+  })),
+  getWorkspaceFolder: vi.fn(() => undefined),
+};
+
+export const FileType = {
+  Unknown: 0,
+  File: 1,
+  Directory: 2,
+  SymbolicLink: 64,
 };
 
 export const Uri = {

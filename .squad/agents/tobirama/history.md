@@ -26,3 +26,17 @@
 - `package.json` — Added build:webview, watch:webview scripts; updated build to run both pipelines
 **Dependencies added:** `@vitejs/plugin-react@^4`, `vite@^7`, `@types/react`, `@types/react-dom`
 **Verification:** lint ✅, build ✅ (extension + webview), 61/61 tests ✅
+
+### 2026-04-26T20:30:00Z — File System Watchers with Debounced Graph Updates
+**Plan:** `docs/plans/02-data-layer/plan-file-watchers.md` (Phases 1-4)
+**Files created:**
+- `src/services/squad-watcher.ts` — SquadWatcher service monitoring 8 .squad/ file patterns
+**Files modified:**
+- `src/extension.ts` — Wired SquadWatcher into activate(), pushed to subscriptions, connected onChange to GraphPanelProvider.refresh()
+- `src/providers/GraphPanelProvider.ts` — Added `refresh()` method (re-reads squads, pushes graph:update to webview), added `getInstance()` static accessor, imported ExtensionToWebviewMessage
+- `src/webview/App.tsx` — Added `graph:update` push handler to update ReactFlow nodes/edges on file changes
+- `test/__mocks__/vscode.ts` — Added `createFileSystemWatcher` and `getWorkspaceFolder` mocks
+- `test/extension.test.ts` — Updated subscription count from 4 to 5
+**Tests added:**
+- `test/squad-watcher.test.ts` — 10 tests covering watcher creation, debouncing, event types, logging, disposal, and edge cases
+**Verification:** lint ✅, build ✅, 168/168 tests ✅
