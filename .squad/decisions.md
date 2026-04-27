@@ -103,3 +103,18 @@
 **By:** Minato (Lead / Architect)
 **What:** Reviewed graph data loading layer (squad-parser.ts, graph-builder.ts, squad-discovery.ts, GraphPanelProvider.ts, App.tsx, types/index.ts, 33 new tests). Clean separation between pure parsers, pure graph construction, VS Code API discovery, and orchestration in the provider. All file operations use `vscode.workspace.fs`. Parsers handle malformed/missing data gracefully. 157 tests pass, TypeScript compiles clean. One major bug found: multi-squad xOffset accumulation in graph-builder.ts causes 3+ squads to overlap. Security note: agent names from team.md used in path construction — sanitize before charter content loading is added.
 **Why:** Well-architected data layer. Every dimension passes — vscode.workspace.fs usage, parser robustness, type safety, multi-squad support, fallback behavior, test coverage. The xOffset bug is real but only affects 3+ squads (2-squad tests pass). Fix is one-line: use absolute right edge (`maxX + 120`) instead of relative width.
+
+### 2026-04-26T20:45:00Z: Code Review — File System Watchers → APPROVE with nits
+**By:** Minato (Lead / Architect)
+**What:** Reviewed squad-watcher.ts, extension.ts wiring, GraphPanelProvider refresh, App.tsx push handling, and 225 lines of watcher tests. Debouncing is correct, dispose cleans up everything, watcher-to-graph pipeline works end-to-end. Two minor issues: race condition in `refresh()` where `this.bridge` can become undefined after async `loadSquads()` if panel closes mid-flight; event listener disposables from `onDid*` calls silently discarded (acceptable since parent watcher dispose handles it).
+**Why:** Watcher implementation is well-structured. Tests cover critical paths including timer-cancel-on-dispose. Minor fixes recommended but non-blocking.
+
+### 2026-04-26T21:15:00Z: Code Review — Extension Host Services → APPROVE with nits
+**By:** Minato (Lead / Architect)
+**What:** Reviewed service-registry.ts, graph-service.ts, session-service.ts, extension.ts wiring, GraphPanelProvider delegation, protocol extensions, 22 new tests. Clean separation — GraphService orchestrates, SessionService reads, provider delegates. Lifecycle with reverse-order disposal. Two major items: Session type defined in service file instead of types/ (fragile cross-boundary import chain), and registry dispose doesn't catch individual failures (one throw leaks remaining services). Minor: session:list re-parses all squads just to extract paths; GenericResponse still weakens the union.
+**Why:** Architecture is sound. Service layer cleanly separates concerns. Type safety maintained throughout protocol. Major items should be addressed soon but don't block forward progress.
+
+### 2026-04-26T21:45:00Z: Code Review — Store Adaptation → APPROVE
+**By:** Minato (Lead / Architect)
+**What:** Reviewed graph-slice.ts, ui-slice.ts, store/index.ts composition, App.tsx refactor, index.tsx push handlers. React 19 safety verified — all seven useWatchtowerStore() calls use individual selectors, no object destructuring. Bridge integration correct: request/response for graph:load, push handlers wired at module scope using getState() outside React. Zustand v5 slice composition with StateCreator spread pattern is correct TypeScript. Error handling solid — loading states cleared in both paths, fallback data always available, UI shows cached data during errors.
+**Why:** Store adaptation is clean, React 19-safe, and follows all Zustand best practices. No vscode imports in webview code. Zero blocking issues.
