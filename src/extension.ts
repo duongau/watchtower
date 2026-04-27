@@ -1,5 +1,6 @@
 import * as vscode from 'vscode';
 import { GraphPanelProvider } from './providers/GraphPanelProvider.js';
+import { SquadWatcher } from './services/squad-watcher.js';
 
 let outputChannel: vscode.OutputChannel;
 
@@ -7,6 +8,11 @@ export function activate(context: vscode.ExtensionContext) {
   outputChannel = vscode.window.createOutputChannel('Watchtower');
   context.subscriptions.push(outputChannel);
   outputChannel.appendLine('Watchtower activating...');
+
+  // File system watchers for .squad/ directories
+  const squadWatcher = new SquadWatcher(outputChannel);
+  squadWatcher.start();
+  context.subscriptions.push(squadWatcher);
 
   // Register commands
   context.subscriptions.push(
@@ -26,6 +32,14 @@ export function activate(context: vscode.ExtensionContext) {
       vscode.window.showInformationMessage('Watchtower: Refreshing agents...');
     })
   );
+
+  // Wire watcher to refresh the graph panel when squad files change
+  squadWatcher.onChange(() => {
+    const provider = GraphPanelProvider.getInstance();
+    if (provider) {
+      provider.refresh();
+    }
+  });
 
   outputChannel.appendLine('Watchtower activated — 3 commands registered');
 }

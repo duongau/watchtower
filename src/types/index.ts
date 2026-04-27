@@ -45,3 +45,37 @@ export interface Squad {
   /** Thematic universe (e.g. "naruto-hokages") */
   universe?: string;
 }
+
+// ---------------------------------------------------------------------------
+// Parsed types — output of squad parsers (src/services/squad-parser.ts)
+// ---------------------------------------------------------------------------
+
+export interface ParsedAgent {
+  name: string;
+  role: string;
+  status: AgentStatus;
+  model?: string;
+  charterPath?: string;
+}
+
+export interface ParsedDecision {
+  timestamp: string;
+  title: string;
+  by: string;
+  summary: string;
+}
+
+export interface ParsedSquad {
+  /** Display name derived from team.md or folder name */
+  name: string;
+  /** Absolute path to the project root containing .squad/ */
+  path: string;
+  /** Thematic universe from team.md Project Context */
+  universe?: string;
+  /** Agents parsed from team.md Members table */
+  agents: ParsedAgent[];
+  /** Decisions parsed from decisions.md */
+  decisions: ParsedDecision[];
+  /** Skill directory names from .squad/skills/ */
+  skills: string[];
+}

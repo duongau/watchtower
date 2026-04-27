@@ -162,6 +162,17 @@ function GraphCanvas() {
     return unsub;
   }, []);
 
+  // Wire up graph:update push from file watcher
+  useEffect(() => {
+    const unsub = bridge.onPush<{ nodes: Node[]; edges: Edge[] }>('graph:update', (data) => {
+      if (data && Array.isArray(data.nodes) && data.nodes.length > 0) {
+        setNodes(data.nodes);
+        setEdges(data.edges);
+      }
+    });
+    return unsub;
+  }, [setNodes, setEdges]);
+
   const minimapNodeColor = useCallback((node: Node) => {
     if (node.type === 'root') return 'var(--vscode-focusBorder)';
     const status = (node.data as { status?: AgentStatus }).status;
