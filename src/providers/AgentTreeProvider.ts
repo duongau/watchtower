@@ -22,8 +22,10 @@ class SquadItem extends vscode.TreeItem {
     super(squad.name, vscode.TreeItemCollapsibleState.Expanded);
     this.agents = squad.agents;
     this.squadPath = squad.path;
-    const universe = squad.universe ? `${squad.universe} · ` : '';
-    this.description = `${universe}${squad.agents.length} agent${squad.agents.length === 1 ? '' : 's'}`;
+    this.description = `${squad.agents.length} agent${squad.agents.length === 1 ? '' : 's'}`;
+    this.tooltip = new vscode.MarkdownString(
+      `**${squad.name}**\n\nUniverse: ${squad.universe ?? 'unknown'}\n\nAgents: ${squad.agents.length}\n\nPath: ${squad.path}`,
+    );
     this.iconPath = new vscode.ThemeIcon('folder-library');
   }
 }
@@ -74,7 +76,7 @@ function roleIcon(role: string): string {
   if (r.includes('extension') || r.includes('api') || r.includes('backend')) return 'plug';
   if (r.includes('data') || r.includes('storage') || r.includes('database')) return 'database';
   if (r.includes('test') || r.includes('qa') || r.includes('quality')) return 'shield';
-  if (r.includes('ux') || r.includes('design')) return 'paintbrush';
+  if (r.includes('ux') || r.includes('design')) return 'symbol-color';
   if (r.includes('devops') || r.includes('release')) return 'rocket';
   if (r.includes('doc') || r.includes('writer')) return 'book';
   if (r.includes('session') || r.includes('scribe') || r.includes('memory')) return 'notebook';
