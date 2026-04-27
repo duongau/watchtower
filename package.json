@@ -16,6 +16,8 @@
     "onCommand:watchtower.openGraph",
     "onCommand:watchtower.openMissionControl",
     "onCommand:watchtower.refreshAgents",
+    "onCommand:watchtower.openCharter",
+    "onCommand:watchtower.refreshAll",
     "onView:watchtower.agents",
     "onView:watchtower.sessions",
     "onView:watchtower.skills"
@@ -40,7 +42,19 @@
       {
         "command": "watchtower.refreshAgents",
         "title": "Refresh Agents",
+        "category": "Watchtower",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "watchtower.openCharter",
+        "title": "Open Charter",
         "category": "Watchtower"
+      },
+      {
+        "command": "watchtower.refreshAll",
+        "title": "Refresh All",
+        "category": "Watchtower",
+        "icon": "$(refresh)"
       }
     ],
     "viewsContainers": {
@@ -48,7 +62,7 @@
         {
           "id": "watchtower",
           "title": "Watchtower",
-          "icon": "resources/icon.svg"
+          "icon": "resources/watchtower-icon.svg"
         }
       ]
     },
@@ -65,6 +79,26 @@
         {
           "id": "watchtower.skills",
           "name": "Skills"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "watchtower.refreshAgents",
+          "when": "view == watchtower.agents",
+          "group": "navigation"
+        },
+        {
+          "command": "watchtower.refreshAll",
+          "when": "view == watchtower.sessions",
+          "group": "navigation"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "watchtower.openCharter",
+          "when": "false"
         }
       ]
     }
