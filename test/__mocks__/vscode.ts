@@ -31,9 +31,19 @@ export const mockPanel = {
 export const window = {
   createOutputChannel: vi.fn(() => mockOutputChannel),
   createWebviewPanel: vi.fn(() => mockPanel),
+  createStatusBarItem: vi.fn(() => ({
+    text: '',
+    tooltip: '',
+    command: undefined,
+    show: vi.fn(),
+    hide: vi.fn(),
+    dispose: vi.fn(),
+  })),
+  registerTreeDataProvider: vi.fn(() => mockDisposable),
   showInformationMessage: vi.fn(),
   showErrorMessage: vi.fn(),
   showWarningMessage: vi.fn(),
+  showTextDocument: vi.fn(),
 };
 
 export const commands = {
@@ -90,6 +100,37 @@ export const EventEmitter = vi.fn().mockImplementation(() => ({
   event: vi.fn(),
   fire: vi.fn(),
 }));
+
+export const TreeItem = vi.fn().mockImplementation(function (this: any, label: string, collapsibleState?: number) {
+  this.label = label;
+  this.collapsibleState = collapsibleState;
+});
+
+export const TreeItemCollapsibleState = {
+  None: 0,
+  Collapsed: 1,
+  Expanded: 2,
+};
+
+export const StatusBarAlignment = {
+  Left: 1,
+  Right: 2,
+};
+
+export class ThemeIcon {
+  constructor(public id: string, public color?: any) {}
+}
+
+export class ThemeColor {
+  constructor(public id: string) {}
+}
+
+export class MarkdownString {
+  value: string;
+  constructor(value?: string) {
+    this.value = value ?? '';
+  }
+}
 
 export type ExtensionContext = {
   subscriptions: { dispose: () => void }[];

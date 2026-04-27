@@ -25,9 +25,9 @@ describe('activate()', () => {
     expect(window.createOutputChannel).toHaveBeenCalledWith('Watchtower');
   });
 
-  it('registers all three commands', () => {
+  it('registers all eight commands', () => {
     activate(context as any);
-    expect(commands.registerCommand).toHaveBeenCalledTimes(3);
+    expect(commands.registerCommand).toHaveBeenCalledTimes(8);
     expect(commands.registerCommand).toHaveBeenCalledWith(
       'watchtower.openGraph',
       expect.any(Function)
@@ -40,12 +40,32 @@ describe('activate()', () => {
       'watchtower.refreshAgents',
       expect.any(Function)
     );
+    expect(commands.registerCommand).toHaveBeenCalledWith(
+      'watchtower.openCharter',
+      expect.any(Function)
+    );
+    expect(commands.registerCommand).toHaveBeenCalledWith(
+      'watchtower.refreshAll',
+      expect.any(Function)
+    );
+    expect(commands.registerCommand).toHaveBeenCalledWith(
+      'watchtower.scanSquads',
+      expect.any(Function)
+    );
+    expect(commands.registerCommand).toHaveBeenCalledWith(
+      'watchtower.openDecisions',
+      expect.any(Function)
+    );
+    expect(commands.registerCommand).toHaveBeenCalledWith(
+      'watchtower.focusAgents',
+      expect.any(Function)
+    );
   });
 
   it('pushes disposables to context.subscriptions', () => {
     activate(context as any);
-    // 1 output channel + 1 service registry + 1 squad watcher + 3 commands = 6 disposables
-    expect(context.subscriptions.length).toBe(6);
+    // 1 output channel + 1 service registry + 3 tree views + 1 status bar + 1 squad watcher + 8 commands = 15 disposables
+    expect(context.subscriptions.length).toBe(15);
   });
 });
 

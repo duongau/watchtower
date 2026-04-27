@@ -86,3 +86,39 @@ describe('Package manifest — activation events', () => {
     }
   });
 });
+
+describe('Package manifest — new commands', () => {
+  const commands: { command: string; title: string }[] =
+    pkg.contributes?.commands ?? [];
+  const commandIds = commands.map((c) => c.command);
+
+  it('includes watchtower.scanSquads', () => {
+    expect(commandIds).toContain('watchtower.scanSquads');
+  });
+
+  it('includes watchtower.openDecisions', () => {
+    expect(commandIds).toContain('watchtower.openDecisions');
+  });
+
+  it('includes watchtower.focusAgents', () => {
+    expect(commandIds).toContain('watchtower.focusAgents');
+  });
+});
+
+describe('Package manifest — keybindings', () => {
+  const keybindings: { command: string; key: string; mac?: string }[] =
+    pkg.contributes?.keybindings ?? [];
+
+  it('has at least one keybinding', () => {
+    expect(keybindings.length).toBeGreaterThan(0);
+  });
+
+  it('openGraph has ctrl+shift+w keybinding', () => {
+    const binding = keybindings.find(
+      (k) => k.command === 'watchtower.openGraph'
+    );
+    expect(binding).toBeDefined();
+    expect(binding!.key).toBe('ctrl+shift+w');
+    expect(binding!.mac).toBe('cmd+shift+w');
+  });
+});

@@ -5,6 +5,7 @@
   "version": "0.1.0",
   "publisher": "duongau",
   "license": "MIT",
+  "icon": "resources/icon.png",
   "engines": {
     "vscode": "^1.100.0"
   },
@@ -16,6 +17,11 @@
     "onCommand:watchtower.openGraph",
     "onCommand:watchtower.openMissionControl",
     "onCommand:watchtower.refreshAgents",
+    "onCommand:watchtower.openCharter",
+    "onCommand:watchtower.refreshAll",
+    "onCommand:watchtower.scanSquads",
+    "onCommand:watchtower.openDecisions",
+    "onCommand:watchtower.focusAgents",
     "onView:watchtower.agents",
     "onView:watchtower.sessions",
     "onView:watchtower.skills"
@@ -40,6 +46,33 @@
       {
         "command": "watchtower.refreshAgents",
         "title": "Refresh Agents",
+        "category": "Watchtower",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "watchtower.openCharter",
+        "title": "Open Charter",
+        "category": "Watchtower"
+      },
+      {
+        "command": "watchtower.refreshAll",
+        "title": "Refresh All",
+        "category": "Watchtower",
+        "icon": "$(refresh)"
+      },
+      {
+        "command": "watchtower.scanSquads",
+        "title": "Scan for Squads",
+        "category": "Watchtower"
+      },
+      {
+        "command": "watchtower.openDecisions",
+        "title": "Open Decisions",
+        "category": "Watchtower"
+      },
+      {
+        "command": "watchtower.focusAgents",
+        "title": "Focus Agents View",
         "category": "Watchtower"
       }
     ],
@@ -48,7 +81,7 @@
         {
           "id": "watchtower",
           "title": "Watchtower",
-          "icon": "resources/icon.svg"
+          "icon": "resources/watchtower-icon.svg"
         }
       ]
     },
@@ -67,7 +100,34 @@
           "name": "Skills"
         }
       ]
-    }
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "watchtower.refreshAgents",
+          "when": "view == watchtower.agents",
+          "group": "navigation"
+        },
+        {
+          "command": "watchtower.refreshAll",
+          "when": "view == watchtower.sessions",
+          "group": "navigation"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "watchtower.openCharter",
+          "when": "false"
+        }
+      ]
+    },
+    "keybindings": [
+      {
+        "command": "watchtower.openGraph",
+        "key": "ctrl+shift+w",
+        "mac": "cmd+shift+w"
+      }
+    ]
   },
   "scripts": {
     "vscode:prepublish": "npm run build",
