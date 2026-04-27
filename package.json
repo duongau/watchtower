@@ -5,6 +5,7 @@
   "version": "0.1.0",
   "publisher": "duongau",
   "license": "MIT",
+  "icon": "resources/icon.png",
   "engines": {
     "vscode": "^1.100.0"
   },
